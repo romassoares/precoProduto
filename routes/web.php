@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,5 +19,9 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/produto', 'ProductController@index')->name('produto');
+    Route::get('/ingrediente', 'IngredientController@index')->name('ingrediente');
+    Route::get('/relatorio', 'ReportController@index')->name('relatorio');
+});

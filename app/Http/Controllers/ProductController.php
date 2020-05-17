@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Entrance_exit;
+use App\Product;
 use Illuminate\Http\Request;
 
-class EntranceExitController extends Controller
+class ProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class EntranceExitController extends Controller
      */
     public function index()
     {
-        //
+        return view('system/product/index');
     }
 
     /**
@@ -41,10 +41,10 @@ class EntranceExitController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Entrance_exit  $entrance_exit
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function show(Entrance_exit $entrance_exit)
+    public function show(Product $product)
     {
         //
     }
@@ -52,10 +52,10 @@ class EntranceExitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Entrance_exit  $entrance_exit
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Entrance_exit $entrance_exit)
+    public function edit(Product $product)
     {
         //
     }
@@ -64,10 +64,10 @@ class EntranceExitController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Entrance_exit  $entrance_exit
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Entrance_exit $entrance_exit)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -75,10 +75,10 @@ class EntranceExitController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Entrance_exit  $entrance_exit
+     * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Entrance_exit $entrance_exit)
+    public function destroy(Product $product)
     {
         //
     }

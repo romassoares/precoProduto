@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Entrance_exit;
+use App\Product;
 use Faker\Generator as Faker;
 
-$factory->define(Entrance_exit::class, function (Faker $faker) {
+$factory->define(Product::class, function (Faker $faker) {
     return [
         //
     ];

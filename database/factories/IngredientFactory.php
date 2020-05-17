@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Tithe;
+use App\Ingredient;
 use Faker\Generator as Faker;
 
-$factory->define(Tithe::class, function (Faker $faker) {
+$factory->define(Ingredient::class, function (Faker $faker) {
     return [
         //
     ];

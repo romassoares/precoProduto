@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Schedule;
+use App\Ingredient;
 use Illuminate\Http\Request;
 
-class ScheduleController extends Controller
+class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ScheduleController extends Controller
      */
     public function index()
     {
-        //
+        return view('system/ingredient/index');
     }
 
     /**
@@ -41,10 +41,10 @@ class ScheduleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Schedule  $schedule
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function show(Schedule $schedule)
+    public function show(Ingredient $ingredient)
     {
         //
     }
@@ -52,10 +52,10 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Schedule  $schedule
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function edit(Schedule $schedule)
+    public function edit(Ingredient $ingredient)
     {
         //
     }
@@ -64,10 +64,10 @@ class ScheduleController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Schedule  $schedule
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Schedule $schedule)
+    public function update(Request $request, Ingredient $ingredient)
     {
         //
     }
@@ -75,10 +75,10 @@ class ScheduleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Schedule  $schedule
+     * @param  \App\Ingredient  $ingredient
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Schedule $schedule)
+    public function destroy(Ingredient $ingredient)
     {
         //
     }
