@@ -16,6 +16,13 @@ class CreateIngredientsTable extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('description', 100);
+            $table->string('und');
+            $table->decimal('amount', 8, 3);
+            $table->decimal('price', 7, 2);
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8';
+            $table->collation = 'utf8_unicode_ci';
         });
     }
 

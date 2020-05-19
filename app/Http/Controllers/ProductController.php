@@ -7,43 +7,37 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    private $obj;
+
+    public function __construct()
+    {
+        $this->obj = new Product();
+    }
+
     public function index()
     {
-        return view('system/product/index');
+        $result = $this->obj->all();
+        return view('system/product/index', compact('result'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('system/product/form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $result = $this->obj->create([
+            'description' => $request->description,
+            'amount' => $request->amount,
+            'price' => $request->price,
+        ]);
+        if ($result) {
+            return view('system/product/index', compact('result'));
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
     public function show(Product $product)
     {
         //

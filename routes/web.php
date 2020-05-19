@@ -22,6 +22,10 @@ Auth::routes();
 Route::middleware('auth')->group(function () {
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/produto', 'ProductController@index')->name('produto');
+    Route::get('/produto/novo', 'ProductController@create')->name('produto.create');
+    Route::post('/produto/salvar', 'ProductController@store')->name('produto.store');
+
+    // Ingredient
     Route::get('/ingrediente', 'IngredientController@index')->name('ingrediente');
     Route::get('/relatorio', 'ReportController@index')->name('relatorio');
 });
