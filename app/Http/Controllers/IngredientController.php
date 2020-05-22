@@ -2,82 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\IngredientRequest;
 use App\Ingredient;
 use Illuminate\Http\Request;
 
 class IngredientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $obj;
+
+    public function __construct()
+    {
+        $this->obj = new Ingredient();
+    }
+
     public function index()
     {
-        return view('system/ingredient/index');
+        $result = $this->obj->all();
+        return view('system/ingredient/index', compact('result' ?? ''));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('system/ingredient/form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $this->obj->construct($request);
+        $result = $this->obj->create([
+            'description' => $request->description,
+            'und' => $request->und,
+            'amount' => $request->amount,
+            'price' => $request->price,
+        ]);
+        if ($result) {
+            return redirect()->route('ingrediente.show', $result->id);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Ingredient $ingredient)
+    public function show($id)
     {
-        //
+        $result = $this->obj->find($id);
+        return view('system/ingredient/show', compact('result' ?? ''));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Ingredient $ingredient)
+    public function edit($id)
     {
-        //
+        $result = $this->obj->find($id);
+        return view('system/ingredient/form', compact('result' ?? ''));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Ingredient $ingredient)
+    public function update(IngredientRequest $request, $id)
     {
-        //
+        $result = $this->obj->cUpdate($request, $id);
+        return redirect()->route('ingrediente.show', $result);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Ingredient  $ingredient
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Ingredient $ingredient)
     {
         //

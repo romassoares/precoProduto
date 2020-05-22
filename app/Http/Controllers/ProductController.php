@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Http\Requests\ProductRequest;
+use App\Ingredient;
+use Facade\FlareClient\View;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,12 +16,13 @@ class ProductController extends Controller
     public function __construct()
     {
         $this->obj = new Product();
+        $this->ing = new Ingredient();
     }
 
     public function index()
     {
         $result = $this->obj->all();
-        return view('system/product/index', compact('result'));
+        return view('system/product/index', compact('result' ?? ''));
     }
 
     public function create()
@@ -28,42 +32,34 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
+        $this->obj->construct($request);
         $result = $this->obj->create([
             'description' => $request->description,
             'amount' => $request->amount,
             'price' => $request->price,
         ]);
         if ($result) {
-            return view('system/product/index', compact('result'));
+            return redirect()->route('produto.show', $result->id);
         }
     }
 
-    public function show(Product $product)
+    public function show($id)
     {
-        //
+        $result = $this->obj->find($id);
+        $ingredients = $this->ing->find($id);
+        return view('system/product/show', compact('result' ?? '', 'ingredients' ?? ''));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product)
+    public function edit($id)
     {
-        //
+        $result = $this->obj->find($id);
+        return view('system/product/form', compact('result' ?? ''));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
+    public function update(ProductRequest $request, $id)
     {
-        //
+        $result = $this->obj->cUpdate($request, $id);
+        return redirect()->route('produto.show', $result);
     }
 
     /**

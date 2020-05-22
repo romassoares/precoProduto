@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class Ingredient extends FormRequest
+class IngredientRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,10 @@ class Ingredient extends FormRequest
     public function rules()
     {
         return [
-            //
+            'description' => 'required|max:100',
+            'und' => 'required|numeric',
+            'amount' => 'required|numeric',
+            'price' => 'required|numeric',
         ];
     }
 }

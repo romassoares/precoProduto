@@ -16,22 +16,29 @@
               <table class="table table-striped">
                 <thead>
                   <tr>
-                    <th style="width: 10px">#</th>
+                    <th>#</th>
                     <th>nome</th>
                     <th>qnt</th>
-                    <th style="width: 40px">R$</th>
+                    <th>Valor</th>
+                    <th>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
-                  @foreach($result as $products)
+                  @foreach($result as $product)
                   <tr>
-                    <td>{{$products->id}}</td>
-                    <td>{{$products->description}}</td>
-                    <td>{{$products->amount}}</td>
-                    <td>{{$products->price}}</td>
+                    <td>{{$product->id}}</td>
+                    <td>{{$product->description}}</td>
+                    <td>{{$product->amount}}</td>
+                    <td>R$ {{$product->getPrice()}}</td>
+                    <td>
+                      <div class="form-group">
+                        <a href="{{route('produto.show',$product->id)}}" class="text-primary m-1"><i class="fas fa-eye"></i></a>
+                        <a href="{{route('produto.edit',$product->id)}}" class="text-warning m-2"><i class="fas fa-edit"></i></a>
+                        <a href="{{route('produto.remove',$product->id)}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
+                      </div>
+                    </td>
                   </tr>
                   @endforeach
-
                 </tbody>
               </table>
             </div>
