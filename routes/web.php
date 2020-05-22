@@ -45,5 +45,14 @@ Route::middleware('auth')->group(function () {
         Route::delete('/{id}/remove', 'IngredientController@remove')->name('ingrediente.remove');
         Route::put('/{id}/restaura', 'IngredientController@restore')->name('ingrediente.restore');
     });
+
+    // IngredientProduto
+    Route::post('produto/adcionar-ingredient', 'ProductIngredients@store')->name('produtoIngrediente.store');
+    Route::get('produto/{id}/editar-ingredient', 'ProductIngredients@edit')->name('produtoIngrediente.edit');
+    Route::put('produto/{id}/altera-ingredient', 'ProductIngredients@update')->name('produtoIngrediente.update');
+    Route::delete('produto/{id}/remove-ingredient', 'ProductIngredients@remove')->name('produtoIngrediente.remove');
+    Route::put('produto/{id}/restaura-ingredient', 'ProductIngredients@restore')->name('produtoIngrediente.restore');
+
+
     Route::get('/relatorio', 'ReportController@index')->name('relatorio');
 });
