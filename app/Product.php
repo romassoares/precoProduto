@@ -10,6 +10,7 @@ class Product extends Model
     protected $fillable = [
         'description',
         'amount',
+        'und',
         'price',
     ];
 
@@ -29,6 +30,15 @@ class Product extends Model
     public function getAmount()
     {
         return $this->amount;
+    }
+
+    public function setUnd($value)
+    {
+        $this->und = $value;
+    }
+    public function getUnd()
+    {
+        return $this->und;
     }
 
     public function setPrice($value)
@@ -55,6 +65,7 @@ class Product extends Model
     {
         $this->setDescription($request['description']);
         $this->setAmount($request['amount']);
+        $this->setUnd($request['und']);
         $this->setPrice(str_replace(',', '.', $request['price']));
     }
 }

@@ -10,15 +10,15 @@
         <div class="card-header">Produto</div>
         <div class="card-body">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
               <div> <strong>Descrição</strong></div>
               {{$result->description}}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div><strong>Quantidade</strong></div>
-              {{$result->amount}}
+              {{$result->amount}}{{$result->und}}
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div><strong>Preço</strong></div>
               R$ {{$result->getPrice()}}
             </div>

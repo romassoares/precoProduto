@@ -19,6 +19,7 @@ class CreateProductIngredientsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('ingredient_id');
             $table->foreign('ingredient_id')->references('id')->on('ingredients');
+            $table->decimal('qnt',6,3);
             $table->timestamps();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';

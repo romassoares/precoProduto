@@ -36,6 +36,7 @@ class ProductController extends Controller
         $result = $this->obj->create([
             'description' => $request->description,
             'amount' => $request->amount,
+            'und' => $request->und,
             'price' => $request->price,
         ]);
         if ($result) {
@@ -46,7 +47,7 @@ class ProductController extends Controller
     public function show($id)
     {
         $result = $this->obj->find($id);
-        $ingredients = $this->ing->find($id);
+        $ingredients = $this->ing->get()->all();
         return view('system/product/show', compact('result' ?? '', 'ingredients' ?? ''));
     }
 
