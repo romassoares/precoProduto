@@ -41,7 +41,6 @@
                   <th>Qnt</th>
                   <th>R$ Gasto</th>
                 </tr>
-
               </table>
             </div>
           </div>
@@ -62,12 +61,14 @@
       </div>
       <div class="modal-body">
         @if($ingredients??'')
+        <div class="row">
         @foreach($ingredients as $ingredient)
-        <select name="ingredient_id" id="ingredient_id">
-          <option value="">Escolha um item</option>
-          <option value="{{$ingredient->id}}">{{$ingredient->description}}</option>
-        </select>
-        @endforeach
+          <div class="form-group">
+            <input type="checkbox" name="description" id="description" value="{{$ingredient->id}}"> 
+            <label>{{$ingredient->description}}</label>
+            <label>{{$ingredient->amount}}{{$ingredient->und}}</label>
+            @endforeach
+          </div>
         @endif
       </div>
       <div class="modal-footer">
