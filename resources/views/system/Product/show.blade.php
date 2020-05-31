@@ -67,6 +67,7 @@
             <input type="checkbox" name="description" id="description" value="{{$ingredient->id}}"> 
             <label>{{$ingredient->description}}</label>
             <label>{{$ingredient->amount}}{{$ingredient->und}}</label>
+            </div>
             @endforeach
           </div>
         @endif

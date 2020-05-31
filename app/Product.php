@@ -60,6 +60,13 @@ class Product extends Model
         }
     }
 
+    public function cstore($request){
+        $result = construct($request);
+        $result->save();
+        if($result){
+            return $result;
+        }
+    }
 
     public function construct($request)
     {

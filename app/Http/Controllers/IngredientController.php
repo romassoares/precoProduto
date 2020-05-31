@@ -18,12 +18,12 @@ class IngredientController extends Controller
     public function index()
     {
         $result = $this->obj->all();
-        return view('system/ingredient/index', compact('result' ?? ''));
+        return view('system/Ingredient/index', compact('result' ?? ''));
     }
 
     public function create()
     {
-        return view('system/ingredient/form');
+        return view('system/Ingredient/form');
     }
 
     public function store(Request $request)
@@ -43,13 +43,13 @@ class IngredientController extends Controller
     public function show($id)
     {
         $result = $this->obj->find($id);
-        return view('system/ingredient/show', compact('result' ?? ''));
+        return view('system/Ingredient/show', compact('result' ?? ''));
     }
 
     public function edit($id)
     {
         $result = $this->obj->find($id);
-        return view('system/ingredient/form', compact('result' ?? ''));
+        return view('system/Ingredient/form', compact('result' ?? ''));
     }
 
     public function update(IngredientRequest $request, $id)

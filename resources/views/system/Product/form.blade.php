@@ -7,9 +7,9 @@
   <div class="row justify-content-center">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-header">@if($result??'') Editar @else Cadastrar @endif Produto</div>
+        <div class="card-header">@if(isset($result)) Editar @else Cadastrar @endif Produto</div>
         <div class="card-body">
-          @if($result??'')
+          @if(isset($result))
           <form role="form" action="{{route('produto.update',$result->id)}}" method="post" enctype="multipart/form-data">
             {!! method_field('PUT') !!}
             @else
@@ -30,15 +30,15 @@
 					<div class="form-group col-md-6">
 						<label for="und">Unidade de Medida</label>
 						<select name="und" id="und" class="form-control">
-							<option {{$result->und=== 'kg'?'selected':''}} value="kg">Kg</option>
-							<option {{$result->und=== 'g'?'selected':''}} value="g">grama</option>
-							<option {{$result->und=== 'cm'?'selected':''}} value="cm">centimetro</option>
-							<option {{$result->und=== 'm'?'selected':''}} value="m">metro</option>
-							<option {{$result->und=== 'cm³'?'selected':''}} value="cm³">centimentro cubico</option>
-							<option {{$result->und=== 'cm²'?'selected':''}} value="cm²">centimetro quadrado</option>
-							<option {{$result->und=== 'l'?'selected':''}} value="l">litro</option>
-							<option {{$result->und=== 'f'?'selected':''}} value="f">fatia</option>
-							<option {{$result->und=== 'und'?'selected':''}} value="und">unidade</option>
+							<option {{isset($result->und)=== 'kg'?'selected':''}} value="kg">Kg</option>
+							<option {{isset($result->und)=== 'g'?'selected':''}} value="g">grama</option>
+							<option {{isset($result->und)=== 'cm'?'selected':''}} value="cm">centimetro</option>
+							<option {{isset($result->und)=== 'm'?'selected':''}} value="m">metro</option>
+							<option {{isset($result->und)=== 'cm³'?'selected':''}} value="cm³">centimentro cubico</option>
+							<option {{isset($result->und)=== 'cm²'?'selected':''}} value="cm²">centimetro quadrado</option>
+							<option {{isset($result->und)=== 'l'?'selected':''}} value="l">litro</option>
+							<option {{isset($result->und)=== 'f'?'selected':''}} value="f">fatia</option>
+							<option {{isset($result->und)=== 'und'?'selected':''}} value="und">unidade</option>
 						</select>
 					</div>
                 <div class="form-group col-md-6">

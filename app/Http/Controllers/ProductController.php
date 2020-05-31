@@ -11,34 +11,31 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    private $obj;
+    private $obj, $ing, $pr, $request;
 
-    public function __construct()
+    public function __construct(ProductRequest $pr, Product $obj, Ingredient $ing, Request $request)
     {
-        $this->obj = new Product();
-        $this->ing = new Ingredient();
+        $this->obj = $obj;
+        $this->ing = $ing;
+        $this->pr = $pr;
+        $this->request = $request;
     }
 
     public function index()
     {
         $result = $this->obj->all();
-        return view('system/product/index', compact('result' ?? ''));
+        return view('system/Product/index', compact('result' ?? ''));
     }
 
     public function create()
     {
-        return view('system/product/form');
+        return view('system/Product/form');
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $this->obj->construct($request);
-        $result = $this->obj->create([
-            'description' => $request->description,
-            'amount' => $request->amount,
-            'und' => $request->und,
-            'price' => $request->price,
-        ]);
+        $result = $this->obj->cstore($this->request);
+        dd($result);
         if ($result) {
             return redirect()->route('produto.show', $result->id);
         }
@@ -48,18 +45,18 @@ class ProductController extends Controller
     {
         $result = $this->obj->find($id);
         $ingredients = $this->ing->get()->all();
-        return view('system/product/show', compact('result' ?? '', 'ingredients' ?? ''));
+        return view('system/Product/show', compact('result' ?? '', 'ingredients' ?? ''));
     }
 
     public function edit($id)
     {
         $result = $this->obj->find($id);
-        return view('system/product/form', compact('result' ?? ''));
+        return view('system/Product/form', compact('result' ?? ''));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update($id)
     {
-        $result = $this->obj->cUpdate($request, $id);
+        $result = $this->obj->cUpdate($this->request, $id);
         return redirect()->route('produto.show', $result);
     }
 
@@ -69,7 +66,7 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy()
     {
         //
     }
