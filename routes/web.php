@@ -37,8 +37,6 @@ Route::middleware('auth')->group(function () {
 
     // IngredientProduto
 
-    Route::post('produto/adcionar-ingredient', 'ProductIngredientsController@store')->name('produtoIngrediente.store');
-    Route::get('produto/{id}/editar-ingredient', 'ProductIngredientsController@edit')->name('produtoIngrediente.edit');
     Route::put('produto/{id}/altera-ingredient', 'ProductIngredientsController@update')->name('produtoIngrediente.update');
     Route::delete('produto/{id}/remove-ingredient', 'ProductIngredientsController@remove')->name('produtoIngrediente.remove');
     Route::put('produto/{id}/restaura-ingredient', 'ProductIngredientsController@restore')->name('produtoIngrediente.restore');

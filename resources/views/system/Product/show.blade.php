@@ -70,9 +70,10 @@
             </div>
             <div class="modal-body ">
                 <div class="form-group" id="item">
-                    <form role="form" action="{{route('produtoIngrediente.store')}}" method="post" enctype="multipart/form-data">
-                        @foreach($ingredients as $ingredient)
+                    <form role="form" action="{{route('produtoIngrediente.update', $result->id)}}" method="post" enctype="multipart/form-data">
+                        {!! method_field('PUT') !!}
                         {!! csrf_field() !!}
+                        @foreach($ingredients as $ingredient)
                         <div class="col-md-4">
                             <div class="checkbox">
                                 <label from="ingredient_{{$ingredient->id}}">
