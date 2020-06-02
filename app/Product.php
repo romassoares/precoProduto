@@ -50,29 +50,19 @@ class Product extends Model
         return number_format($this->price, 2, ',', '.');
     }
 
-    public function cUpdate($request, $id)
-    {
+    public function cUpdate($request, $id){
         $teste = Product::find($id);
-        $teste->construct($request);
-        $teste->save();
-        if ($teste) {
-            return  $teste->id;
+        $result = $teste->update($request);
+        if ($result) {
+            return  $result;
         }
     }
 
     public function cstore($request){
-        $result = construct($request);
-        $result->save();
+        $novo = new Product;
+        $result = $novo->create($request);
         if($result){
             return $result;
         }
-    }
-
-    public function construct($request)
-    {
-        $this->setDescription($request['description']);
-        $this->setAmount($request['amount']);
-        $this->setUnd($request['und']);
-        $this->setPrice(str_replace(',', '.', $request['price']));
     }
 }

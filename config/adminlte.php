@@ -14,8 +14,8 @@ return [
     |
     */
 
-    'title' => 'PrecoProduto',
-    'title_prefix' => '',
+    'title' => ' PrecoProduto',
+    'title_prefix' => 'precoProduto -',
     'title_postfix' => '',
 
     /*

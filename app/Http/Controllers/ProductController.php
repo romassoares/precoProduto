@@ -11,14 +11,12 @@ use Illuminate\Http\Request;
 class ProductController extends Controller
 {
 
-    private $obj, $ing, $pr, $request;
+    private $obj, $ing;
 
-    public function __construct(ProductRequest $pr, Product $obj, Ingredient $ing, Request $request)
+    public function __construct(Product $obj, Ingredient $ing)
     {
         $this->obj = $obj;
         $this->ing = $ing;
-        $this->pr = $pr;
-        $this->request = $request;
     }
 
     public function index()
@@ -32,13 +30,16 @@ class ProductController extends Controller
         return view('system/Product/form');
     }
 
-    public function store()
+    public function store(ProductRequest $request)
     {
-        $result = $this->obj->cstore($this->request);
-        dd($result);
-        if ($result) {
-            return redirect()->route('produto.show', $result->id);
+       $product = $request->only(['description', 'amount', 'und', 'price']);
+        $salvo = $this->obj->cstore($product);
+        if ($salvo) {
+            return redirect()->route('produto.show', $salvo->id);
+        }else{
+            return redirect()->route('produto.create',compact('request'));
         }
+        
     }
 
     public function show($id)
@@ -54,9 +55,10 @@ class ProductController extends Controller
         return view('system/Product/form', compact('result' ?? ''));
     }
 
-    public function update($id)
+    public function update(Request $request,$id)
     {
-        $result = $this->obj->cUpdate($this->request, $id);
+        $product = $request->only(['description', 'amount', 'und', 'price']);
+        $result = $this->obj->cUpdate($product, $id);
         return redirect()->route('produto.show', $result);
     }
 

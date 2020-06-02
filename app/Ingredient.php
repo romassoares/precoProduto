@@ -49,22 +49,20 @@ class Ingredient extends Model
         return number_format($this->price, 2, ',', '.');
     }
 
-    public function cUpdate($request, $id)
-    {
-        $teste = Product::find($id);
-        $teste->construct($request);
-        $teste->save();
-        if ($teste) {
-            return  $teste->id;
+    public function cUpdate($request, $id){
+        $teste = Ingredient::find($id);
+        $result = $teste->update($request);
+        if ($result) {
+            return  $result;
         }
     }
 
-
-    public function construct($request)
-    {
-        $this->setDescription($request['description']);
-        $this->setUnd($request['und']);
-        $this->setAmount($request['amount']);
-        $this->setPrice(str_replace(',', '.', $request['price']));
+    public function cstore($request){
+        $novo = new Ingredient;
+        $result = $novo->create($request);
+        if($result){
+            return $result;
+        }
     }
+
 }

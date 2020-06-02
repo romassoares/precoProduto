@@ -3,17 +3,6 @@
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -47,18 +36,12 @@ Route::middleware('auth')->group(function () {
     });
 
     // IngredientProduto
-    Route::group([
-        'prefix' => 'produto',
-        'name' => 'produtoIngrediente.'
-    ],function(){
-        Route::post('/adcionar-ingredient', 'ProductIngredients@store')->name('store');
-        Route::get('/{id}/editar-ingredient', 'ProductIngredients@edit')->name('edit');
-        Route::put('/{id}/altera-ingredient', 'ProductIngredients@update')->name('update');
-        Route::delete('/{id}/remove-ingredient', 'ProductIngredients@remove')->name('remove');
-        Route::put('/{id}/restaura-ingredient', 'ProductIngredients@restore')->name('restore');
-    });
-    
 
+    Route::post('produto/adcionar-ingredient', 'ProductIngredientsController@store')->name('produtoIngrediente.store');
+    Route::get('produto/{id}/editar-ingredient', 'ProductIngredientsController@edit')->name('produtoIngrediente.edit');
+    Route::put('produto/{id}/altera-ingredient', 'ProductIngredientsController@update')->name('produtoIngrediente.update');
+    Route::delete('produto/{id}/remove-ingredient', 'ProductIngredientsController@remove')->name('produtoIngrediente.remove');
+    Route::put('produto/{id}/restaura-ingredient', 'ProductIngredientsController@restore')->name('produtoIngrediente.restore');
 
     Route::get('/relatorio', 'ReportController@index')->name('relatorio');
 });

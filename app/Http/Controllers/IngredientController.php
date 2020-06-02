@@ -18,7 +18,7 @@ class IngredientController extends Controller
     public function index()
     {
         $result = $this->obj->all();
-        return view('system/Ingredient/index', compact('result' ?? ''));
+        return view('system/Ingredient/index', compact('result'));
     }
 
     public function create()
@@ -26,15 +26,10 @@ class IngredientController extends Controller
         return view('system/Ingredient/form');
     }
 
-    public function store(Request $request)
+    public function store(IngredientRequest $request)
     {
-        $this->obj->construct($request);
-        $result = $this->obj->create([
-            'description' => $request->description,
-            'und' => $request->und,
-            'amount' => $request->amount,
-            'price' => $request->price,
-        ]);
+        $ingredient = $request->only(['description', 'amount', 'und', 'price']);
+        $result = $this->obj->cstore($ingredient);
         if ($result) {
             return redirect()->route('ingrediente.show', $result->id);
         }
@@ -43,18 +38,19 @@ class IngredientController extends Controller
     public function show($id)
     {
         $result = $this->obj->find($id);
-        return view('system/Ingredient/show', compact('result' ?? ''));
+        return view('system/Ingredient/show', compact('result'));
     }
 
     public function edit($id)
     {
         $result = $this->obj->find($id);
-        return view('system/Ingredient/form', compact('result' ?? ''));
+        return view('system/Ingredient/form', compact('result'));
     }
 
     public function update(IngredientRequest $request, $id)
     {
-        $result = $this->obj->cUpdate($request, $id);
+        $ingredient = $request->only(['description', 'amount', 'und', 'price']);
+        $result = $this->obj->cUpdate($ingredient, $id);
         return redirect()->route('ingrediente.show', $result);
     }
     public function destroy(Ingredient $ingredient)
