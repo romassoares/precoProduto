@@ -38,4 +38,13 @@ class ProductIngredients extends Model
     {
         return $this->qnt;
     }
+
+    public function Ingredient()
+    {
+        return $this->belongsTo('App\Ingredient');
+    }
+    public function Product()
+    {
+        return $this->belongsTo('App\Product');
+    }
 }

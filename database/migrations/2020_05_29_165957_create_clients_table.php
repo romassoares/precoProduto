@@ -17,10 +17,11 @@ class CreateClientsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('name',100);
-            $table->string('adress',100);
-            $table->string('contact',11);
+            $table->string('name', 100);
+            $table->string('adress', 100);
+            $table->string('contact', 11);
             $table->timestamps();
+            $table->softDeletes();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

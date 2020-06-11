@@ -49,7 +49,8 @@ class Ingredient extends Model
         return number_format($this->price, 2, ',', '.');
     }
 
-    public function cUpdate($request, $id){
+    public function cUpdate($request, $id)
+    {
         $teste = Ingredient::find($id);
         $result = $teste->update($request);
         if ($result) {
@@ -57,12 +58,18 @@ class Ingredient extends Model
         }
     }
 
-    public function cstore($request){
+    public function cstore($request)
+    {
         $novo = new Ingredient;
         $result = $novo->create($request);
-        if($result){
+        if ($result) {
             return $result;
         }
     }
 
+    public function Products()
+    {
+
+        return $this->belongsToMany('App\Product', 'ProductIngredients', 'ingredient_id', 'product_id');
+    }
 }

@@ -26,28 +26,38 @@ class ProductIngredientsController extends Controller
     {
         $product = Product::findorfail($product_id);
         $list = $request->all();
-        var_dump($list);
         $ingre = [];
         for ($i = 1; $i < count($list); $i++) {
             if (isset($list['ingredient_' . $i])) {
                 $ingre = Arr::prepend($ingre, $list['ingredient_' . $i]);
             }
         }
-        var_dump($ingre);
-        if ($ingre == true) {
+        if (isset($ingre)) {
             foreach ($ingre as $ingredient) {
+                // dd("aiaia");
+                // $i = ProductIngredients::get()->where('product_id', '=', $product->id);
+                // $i = $this->obj->get()->where('product_id', $product_id);
+                // dd($i);
+                // foreach ($i  as $ingreExist) {
+                // dd('sdsd');
+                // if ($ingreExist->ingredient_id != $ingredient || !$ingreExist) {
                 $new = new ProductIngredients();
                 $save = $new->create([
                     'product_id' => $product->id,
                     'ingredient_id' => $ingredient,
                 ]);
+                if ($save) {
+                    return redirect()->route('produto.show', $product_id)->with('success', 'item adcionado com successo');
+                } else {
+                    return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
+                }
+                // } else {
+                //     return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
+                // }
+                // }
             }
-            if ($save) {
-                return redirect()->route('produto.show', $product_id);
-            } else {
-                return redirect()->back()
-                    ->with('error', 'Houve um erro ao tentar editar os orgãos participantes');;
-            }
+        } else {
+            return redirect()->back()->with('error', 'Error ao selecionar o item');
         }
     }
 }

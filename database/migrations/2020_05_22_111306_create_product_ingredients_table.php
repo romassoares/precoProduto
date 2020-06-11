@@ -21,6 +21,7 @@ class CreateProductIngredientsTable extends Migration
             $table->foreign('ingredient_id')->references('id')->on('ingredients');
             $table->decimal('qnt', 6, 3)->nullable();
             $table->timestamps();
+            $table->softDeletes();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';

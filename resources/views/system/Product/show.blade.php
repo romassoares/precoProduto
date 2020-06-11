@@ -4,7 +4,6 @@
 
 <script>
     function habilitar(e) {
-        console.log(e.target.name);
         const item = document.getElementById(e.target.name);
         item.setAttribute('ckecked', '')
     }
@@ -15,6 +14,9 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
+            @if(session('error'))
+            @include('components.toast', ['msg' => session('error') ])
+            @endif
             <div class="card">
                 <div class="card-header">Produto</div>
                 <div class="card-body">
@@ -32,28 +34,37 @@
                             R$ {{$result->getPrice()}}
                         </div>
                     </div>
-                    <a href="{{route('produto.edit', $result->id)}}"><button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Editar</button></a>
+                    <a href="{{route('produto.edit', $result->id)}}">
+                        <button type="button" class="btn btn-warning">
+                            <i class="fas fa-edit"></i>Editar
+                        </button>
+                    </a>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-header">Ingredientes</div>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Receita
-                </button>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="form-group">
-                            <table>
-                                <tr>
-                                    <th>*</th>
-                                    <th>Descrição</th>
-                                    <th>Qnt</th>
-                                    <th>R$ Gasto</th>
-                                </tr>
-                            </table>
+                <table class="table">
+                    <tr>
+                        <th colspan="4">Ingredientes</th>
+                    </tr>
+                    <tr>
+                        <th>*</th>
+                        <th>Descrição</th>
+                        <th>Qnt</th>
+                        <th>R$ Gasto</th>
+                    </tr>
+                    @foreach($prodIng as $pr)
+                    <tr>
+                        <th>{{$pr->ingredient->id}}</th>
+                        <th>{{$pr->ingredient->description}}</th>
+                        <th>{{$pr->ingredient->qnt}}</th>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <div class="col-md-12">
+                            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
+                                Add item à receita
+                            </button>
                         </div>
-                    </div>
-                </div>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
@@ -87,7 +98,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
             </div>
         </div>

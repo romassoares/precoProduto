@@ -16,10 +16,11 @@ class CreateIngredientsTable extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('description', 100);
-            $table->enum('und', ['kg','l','cm','m','g','cm³','cm²','und','f']);
+            $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f']);
             $table->decimal('amount', 8, 3);
             $table->decimal('price', 7, 2);
             $table->timestamps();
+            $table->softDeletes();
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
