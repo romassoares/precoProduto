@@ -14,7 +14,6 @@ class CreateProductIngredientsTable extends Migration
     public function up()
     {
         Schema::create('product_ingredients', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('ingredient_id');
@@ -22,6 +21,7 @@ class CreateProductIngredientsTable extends Migration
             $table->decimal('qnt', 6, 3)->nullable();
             $table->timestamps();
             $table->softDeletes();
+            $table->primary(['product_id', 'ingredient_id']);
             $table->engine = 'InnoDB';
             $table->charset = 'utf8';
             $table->collation = 'utf8_unicode_ci';
