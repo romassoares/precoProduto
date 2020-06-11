@@ -46,11 +46,8 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $result = $this->obj->find($id);
-        $ingredients = $this->ing->get()->all();
-        $prodIng = $this->obj->find($result->id)->Ingredients()->orderBy('name')->get();
-        dd($prodIng);
-        return view('system/Product/show', compact('result', 'ingredients', 'prodIng'));
+        $result = $this->obj->with('Ingredients')->find($id);
+        return view('system/Product/show', compact('result'));
     }
 
     public function edit($id)
