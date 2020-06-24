@@ -6,6 +6,7 @@ use App\Product;
 use App\ProductIngredients;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB;
 
 class ProductIngredientsController extends Controller
 {
@@ -25,22 +26,13 @@ class ProductIngredientsController extends Controller
     public function update(Request $request, $product_id)
     {
         $product = Product::findorfail($product_id);
-        $list = $request->all();
-        $ingre = [];
-        for ($i = 1; $i < count($list); $i++) {
-            if (isset($list['ingredient_' . $i])) {
-                $ingre = Arr::prepend($ingre, $list['ingredient_' . $i]);
-            }
-        }
-        if (isset($ingre)) {
-            foreach ($ingre as $ingredient) {
-                // dd("aiaia");
-                // $i = ProductIngredients::get()->where('product_id', '=', $product->id);
-                // $i = $this->obj->get()->where('product_id', $product_id);
-                // dd($i);
-                // foreach ($i  as $ingreExist) {
-                // dd('sdsd');
-                // if ($ingreExist->ingredient_id != $ingredient || !$ingreExist) {
+        $list = $request->except(['_method', '_token']);
+
+        foreach ($list as $ingredient) {
+            $result = $this->obj->find($ingredient);
+            if (isset($result)) {
+                return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
+            } else {
                 $new = new ProductIngredients();
                 $save = $new->create([
                     'product_id' => $product->id,
@@ -51,13 +43,27 @@ class ProductIngredientsController extends Controller
                 } else {
                     return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
                 }
-                // } else {
-                //     return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
-                // }
-                // }
             }
-        } else {
-            return redirect()->back()->with('error', 'Error ao selecionar o item');
+        }
+    }
+    public function addQnt(Request $qnt, $product_id)
+    {
+        $product = $product_id;
+        dd($qnt->ingredient);
+        $exist = $this->obj->get()->where('product_id', $product);
+        foreach ($exist as $ing) {
+            if ($ing->ingredient_id == $qnt->ingredient) {
+                $save = DB::table('product_ingredients')
+                    ->where('product_id', $product)
+                    ->where('ingredient_id', $qnt->ingredient)
+                    ->update(['qnt' => $qnt->qnt]);
+                if ($save) {
+                    return redirect()->route('produto.show', $product_id)->with('success', 'item adcionado com successo');
+                } else {
+                    return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
+                }
+            }
+            redirect()->back()->with('warning', 'ocorreu um erro, recarregue a pagina e tente novamente');
         }
     }
 }

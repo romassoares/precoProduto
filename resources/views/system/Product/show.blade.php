@@ -45,16 +45,43 @@
                         <th colspan="4">Ingredientes</th>
                     </tr>
                     <tr>
-                        <th>*</th>
                         <th>Descrição</th>
                         <th>Qnt</th>
                         <th>R$ Gasto</th>
                     </tr>
-                    @foreach($prodIng as $pr)
+                    @foreach($valGasto as $val)
                     <tr>
-                        <th>{{$pr->ingredient->id}}</th>
-                        <th>{{$pr->ingredient->description}}</th>
-                        <th>{{$pr->ingredient->qnt}}</th>
+                        <td>{{$val->ingredient->description}}</td>
+                        <td>{{$val->getQnt()}}</td>
+                        <td>{{$val->qnt/$val->ingredient->price}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#Qnt">Editar Qnt do Item</button>
+                        </td>
+                        <div class="modal fade" id="Qnt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Escolher Ingredientes</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body ">
+                                        <div class="form-group" id="item">
+                                            <form role="form" action="{{route('produtoIngrediente.addQnt', $result->id)}}" method="post" enctype="multipart/form-data">
+                                                {!! method_field('PUT') !!}
+                                                {!! csrf_field() !!}
+                                                <div class="row col-md-12">
+                                                    <input type="text" name="qnt" id="qnt" value="{{isset($val->qnt)?$val->qnt:old('qnt')}}">
+                                                    <input type="hidden" name="ingredient" value="{{$val->ingredient->id}}">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">adcionar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </tr>
                     @endforeach
                     <tr>
@@ -84,11 +111,11 @@
                     <form role="form" action="{{route('produtoIngrediente.update', $result->id)}}" method="post" enctype="multipart/form-data">
                         {!! method_field('PUT') !!}
                         {!! csrf_field() !!}
-                        @foreach($ingredients as $ingredient)
-                        <div class="col-md-4">
-                            <div class="checkbox">
-                                <label from="ingredient_{{$ingredient->id}}">
-                                    <input id="ingredient_{{$ingredient->id}}" name="ingredient_{{$ingredient->id}}" type="checkbox" value="{{$ingredient->id}}" onmousedown="habilitar(event)" /><strong>{{$ingredient->description}}</strong>
+                        @foreach($ingredient as $i)
+                        <div class="row col-md-12">
+                            <div class="form-group checkbox">
+                                <label from="{{$i->id}}">
+                                    <input id="ingredient_{{$i->id}}" name="ingredient_{{$i->id}}" type="checkbox" value="{{$i->id}}" onmousedown="habilitar(event)" /> <strong>{{$i->description}}</strong>
                                 </label>
                             </div>
                         </div>
@@ -97,11 +124,8 @@
                     </form>
                 </div>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-            </div>
         </div>
     </div>
 </div>
+
 @endsection
