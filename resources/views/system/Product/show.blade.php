@@ -53,10 +53,15 @@
                     <tr>
                         <td>{{$val->ingredient->description}}</td>
                         <td>{{$val->getQnt()}}</td>
-                        <td>{{$val->qnt/$val->ingredient->price}}</td>
-                        <td><a href="{{route('proIngQnt.qnt', [ $val->product_id,$val->ingredient_id]) }}">Editar qnt de ingrediente</a></td>
+                        <td>R$ {{$val->getValGasto()}}</td>
+                        <td><a href="{{route('proIngQnt.qnt', [$val->product_id,$val->ingredient_id]) }}">Editar qnt de ingrediente</a></td>
                     </tr>
                     @endforeach
+                    <tr>
+                        <td class="colspan-4">
+                            R$ {{$valGasto->getTotGasto()}}
+                        </td>
+                    </tr>
                     <tr>
                         <div class="col-md-12">
                             <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">

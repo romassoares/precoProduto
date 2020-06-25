@@ -29,10 +29,14 @@ class ProductIngredientsController extends Controller
         $product = Product::findorfail($product_id);
         $list = $request->except(['_method', '_token']);
         foreach ($list as $ingredient) {
-            $result = $this->obj->find($ingredient);
+            $result = $this->obj->get()
+                ->where('product_id', $product_id);
+            foreach ($result as $exist) {
+                if ($exist->ingredient_id == $ingredient) {
+                    return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
+                }
+            }
             if (isset($result)) {
-                return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
-            } else {
                 $new = new ProductIngredients();
                 $save = $new->create([
                     'product_id' => $product->id,
