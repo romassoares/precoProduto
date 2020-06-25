@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::put('produto/{id}/altera-ingredient', 'ProductIngredientsController@update')->name('produtoIngrediente.update');
     Route::delete('produto/{id}/remove-ingredient', 'ProductIngredientsController@remove')->name('produtoIngrediente.remove');
     Route::put('produto/{id}/restaura-ingredient', 'ProductIngredientsController@restore')->name('produtoIngrediente.restore');
+    Route::get('/{id}/quantidade-ingrediente/{ing}', 'ProductIngredientsController@Qnt')->name('proIngQnt.qnt');
     Route::put('produto/{id}/qnt', 'ProductIngredientsController@addQnt')->name('produtoIngrediente.addQnt');
 
     Route::get('/relatorio', 'ReportController@index')->name('relatorio');

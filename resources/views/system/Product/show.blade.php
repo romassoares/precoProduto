@@ -54,34 +54,7 @@
                         <td>{{$val->ingredient->description}}</td>
                         <td>{{$val->getQnt()}}</td>
                         <td>{{$val->qnt/$val->ingredient->price}}</td>
-                        <td>
-                            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#Qnt">Editar Qnt do Item</button>
-                        </td>
-                        <div class="modal fade" id="Qnt" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Escolher Ingredientes</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body ">
-                                        <div class="form-group" id="item">
-                                            <form role="form" action="{{route('produtoIngrediente.addQnt', $result->id)}}" method="post" enctype="multipart/form-data">
-                                                {!! method_field('PUT') !!}
-                                                {!! csrf_field() !!}
-                                                <div class="row col-md-12">
-                                                    <input type="text" name="qnt" id="qnt" value="{{isset($val->qnt)?$val->qnt:old('qnt')}}">
-                                                    <input type="hidden" name="ingredient" value="{{$val->ingredient->id}}">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">adcionar</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <td><a href="{{route('proIngQnt.qnt', [ $val->product_id,$val->ingredient_id]) }}">Editar qnt de ingrediente</a></td>
                     </tr>
                     @endforeach
                     <tr>

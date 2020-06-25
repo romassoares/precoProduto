@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ingredient;
 use App\Product;
 use App\ProductIngredients;
 use Illuminate\Http\Request;
@@ -27,7 +28,6 @@ class ProductIngredientsController extends Controller
     {
         $product = Product::findorfail($product_id);
         $list = $request->except(['_method', '_token']);
-
         foreach ($list as $ingredient) {
             $result = $this->obj->find($ingredient);
             if (isset($result)) {
@@ -46,15 +46,21 @@ class ProductIngredientsController extends Controller
             }
         }
     }
+    public function Qnt($id, $ing)
+    {
+        $result = $this->obj->where('product_id', $id)->where('ingredient_id', $ing)->get()->first();
+        $ingredient = Ingredient::find($result->ingredient_id);
+        return view('system.Product.recipe', ['result' => $result, 'ingredient' => $ingredient]);
+    }
     public function addQnt(Request $qnt, $product_id)
     {
-        $product = $product_id;
-        dd($qnt->ingredient);
-        $exist = $this->obj->get()->where('product_id', $product);
+        $exist = $this->obj->get()->where('product_id', $product_id)->where('ingredient_id', $qnt->ingredient);
         foreach ($exist as $ing) {
+            // dd($ing->ingredient_id);
+            // dd($ing->ingredient_id == $qnt->ingredient);
             if ($ing->ingredient_id == $qnt->ingredient) {
                 $save = DB::table('product_ingredients')
-                    ->where('product_id', $product)
+                    ->where('product_id', $ing->product_id)
                     ->where('ingredient_id', $qnt->ingredient)
                     ->update(['qnt' => $qnt->qnt]);
                 if ($save) {
