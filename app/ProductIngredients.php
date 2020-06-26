@@ -42,20 +42,9 @@ class ProductIngredients extends Model
 
     public function getValGasto()
     {
+        // $price = ($this->qnt / $this->Ingredient->amount) * $this->Ingredient->price;
         $price = $this->qnt * $this->Ingredient->price;
         return number_format($price, 2, ',', '.');
-    }
-
-    // *****************************************************************************************
-    // não sei como pegar getValGasto de todos os ingredientes
-    public function getTotGasto()
-    {
-        $tot = $this->get()->all();
-        $val = 0;
-        foreach ($tot as $t) {
-            $val += intval($this->getValGasto()) * $this->Ingredient->price;
-        }
-        return $val;
     }
 
     public function Ingredient()

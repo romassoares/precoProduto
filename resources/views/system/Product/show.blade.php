@@ -49,8 +49,14 @@
                         <th>Qnt</th>
                         <th>R$ Gasto</th>
                     </tr>
+                    @php
+                    $totgast = 0;
+                    @endphp
                     @foreach($valGasto as $val)
                     <tr>
+                        @php
+                        $totgast += str_replace(array('.', ','), array('', '.'), $val->getValGasto());
+                        @endphp
                         <td>{{$val->ingredient->description}}</td>
                         <td>{{$val->getQnt()}}</td>
                         <td>R$ {{$val->getValGasto()}}</td>
@@ -58,9 +64,25 @@
                     </tr>
                     @endforeach
                     <tr>
-                        <td class="colspan-4">
-                            R$ {{$valGasto->getTotGasto()}}
-                        </td>
+                        <th>Total gasto na receita</th>
+                        <th>R$ gasto na UND</th>
+                        <th>Lucro por UND</th>
+                        <th>lucro total</th>
+                    </tr>
+                    <tr>
+                        <td> R$ {{number_format($totgast,2,',','.')}} </td>
+                        @php
+                        $ValUnd = $totgast/$result->amount;
+                        @endphp
+                        <td> R$ {{number_format($ValUnd,3,',','.')}} </td>
+                        @php
+                        $lucro = str_replace(array('.',','),array('','.'),$result->getPrice())-$ValUnd;
+                        @endphp
+                        <td>R$ {{number_format($lucro,3,',','.')}}</td>
+                        @php
+                        $lucrototal = ($result->price*$result->amount)-$totgast;
+                        @endphp
+                        <td>{{$lucrototal}} </td>
                     </tr>
                     <tr>
                         <div class="col-md-12">
