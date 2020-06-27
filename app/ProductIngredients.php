@@ -42,7 +42,6 @@ class ProductIngredients extends Model
 
     public function getValGasto()
     {
-        // $price = ($this->qnt / $this->Ingredient->amount) * $this->Ingredient->price;
         $price = $this->qnt * $this->Ingredient->price;
         return number_format($price, 2, ',', '.');
     }

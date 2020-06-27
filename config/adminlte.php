@@ -224,6 +224,16 @@ return [
             'icon'        => 'far fa-fw fa-file',
         ],
         [
+            'text'        => 'Vendas',
+            'url'         => 'venda',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
+            'text'        => 'Clientes',
+            'url'         => 'cliente',
+            'icon'        => 'far fa-fw fa-file',
+        ],
+        [
             'text'        => 'Relatório',
             'url'         => 'relatorio',
             'icon'        => 'far fa-fw fa-file',

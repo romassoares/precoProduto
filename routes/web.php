@@ -44,4 +44,16 @@ Route::middleware('auth')->group(function () {
     Route::put('produto/{id}/qnt', 'ProductIngredientsController@addQnt')->name('produtoIngrediente.addQnt');
 
     Route::get('/relatorio', 'ReportController@index')->name('relatorio');
+
+    // produto
+    Route::group(['prefix' => '/cliente'], function () {
+        Route::get('', 'ClientController@index')->name('cliente');
+        Route::get('/novo', 'ClientController@create')->name('cliente.create');
+        Route::post('/salvar', 'ClientController@store')->name('cliente.store');
+        Route::get('/{id}', 'ClientController@show')->name('cliente.show');
+        Route::get('/{id}/editar', 'ClientController@edit')->name('cliente.edit');
+        Route::put('/{id}/altera', 'ClientController@update')->name('cliente.update');
+        Route::delete('/{id}/remove', 'ClientController@remove')->name('cliente.remove');
+        Route::put('/{id}/restaura', 'ClientController@restore')->name('cliente.restore');
+    });
 });

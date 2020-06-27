@@ -3,81 +3,61 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Http\Requests\ClientRequest;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    private $obj;
+
+    public function __construct(Client $obj)
+    {
+        $this->obj = $obj;
+    }
+
     public function index()
     {
-        //
+        $clients = $this->obj->all();
+        return view('system/Client/index', ['clients' => $clients]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+        return view('system/Client/form');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(ClientRequest $request)
     {
-        //
+        $client = $request->only(['name', 'city', 'district', 'street', 'number', 'contact']);
+        $salvo = $this->obj->cstore($client);
+        if ($salvo) {
+            return redirect()->route('cliente.show', $salvo->id);
+        } else {
+            return redirect()->route('cliente.create', ['client' => $client]);
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Client $client)
+
+    public function show($id)
     {
-        //
+        $result = $this->obj->find($id);
+        return view('system/Client/show', ['client' => $result]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Client $client)
+    public function edit($id)
     {
-        //
+        $client = $this->obj->find($id);
+        return view('system/Client/form', ['result' => $client]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Client $client)
+    public function update(ClientRequest $request, $id)
     {
-        //
+        $client = $request->only(['name', 'city', 'district', 'street', 'number', 'contact']);
+        $result = $this->obj->cUpdate($client, $id);
+        return redirect()->route('cliente.show', ['client' => $result]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Client  $client
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Client $client)
     {
         //
