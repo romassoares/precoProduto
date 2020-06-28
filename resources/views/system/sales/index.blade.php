@@ -25,7 +25,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($result as $sale)
+                                    @foreach($sales as $sale)
                                     <tr>
                                         <td>{{$sale->id}}</td>
                                         <td>{{$sale->Product->description}}</td>
@@ -43,7 +43,11 @@
                             </table>
                         </div>
                         <div class="card-footer">
-                            <a href="/venda/novo"><button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button></a>
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
+                                    Nova venda
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -51,4 +55,41 @@
         </div>
     </div>
 </div>
+<!-- clientes -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Escolher clientes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body ">
+                <div class="form-group" id="item">
+                    <div class="row col-md-12">
+                        <div class="form-group">
+                            <label from="client_id">
+                                <select name="client_id" id="client_id">
+                                    @foreach($clients as $client)
+                                    <option value="{{$client->id}}">{{$client->name}} </option>
+                                    @endforeach
+                                </select>
+                            </label>
+                        </div>
+                    </div>
+                    <button onclick="selecionar()" type="button" class="btn btn-primary">adcionar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function selecionar(e) {
+        const item = document.querySelector('#client_id');
+        if (item != '') {
+            window.location.href = '/venda/' + item.value + '/novo'
+        }
+    }
+</script>
 @endsection

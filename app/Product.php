@@ -71,4 +71,8 @@ class Product extends Model
     {
         return $this->belongsToMany('App\Ingredient', 'product_ingredients', 'product_id', 'ingredient_id');
     }
+    public function Sales()
+    {
+        return $this->belongsTo('App\Sale');
+    }
 }

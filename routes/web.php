@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -45,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/relatorio', 'ReportController@index')->name('relatorio');
 
-    // produto
+    // cliente
     Route::group(['prefix' => '/cliente'], function () {
         Route::get('', 'ClientController@index')->name('cliente');
         Route::get('/novo', 'ClientController@create')->name('cliente.create');
@@ -55,5 +56,18 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}/altera', 'ClientController@update')->name('cliente.update');
         Route::delete('/{id}/remove', 'ClientController@remove')->name('cliente.remove');
         Route::put('/{id}/restaura', 'ClientController@restore')->name('cliente.restore');
+    });
+
+    // venda
+    Route::group(['prefix' => '/venda'], function () {
+        Route::get('', 'SaleController@index')->name('venda');
+        Route::get('/{id}/novo', 'SaleController@create')->name('venda.create');
+        Route::put('/{id}/add-product', 'SaleController@addProduct')->name('venda.addProduct');
+        Route::get('/{id}/finalizando-venda', 'SaleController@store')->name('venda.store');
+        Route::get('/{id}', 'SaleController@show')->name('venda.show');
+        Route::get('/{id}/editar', 'SaleController@edit')->name('venda.edit');
+        Route::put('/{id}/altera', 'SaleController@update')->name('venda.update');
+        Route::delete('/{id}/remove', 'SaleController@remove')->name('venda.remove');
+        Route::put('/{id}/restaura', 'SaleController@restore')->name('venda.restore');
     });
 });
