@@ -39,8 +39,8 @@ class SaleController extends Controller
     public function addProduct(Request $request, $id)
     {
         $product = Client::findorfail($id);
-        $product = $request->only(['product_id', 'discount', 'price']);
-        dd($product);
+        $result = $request->only(['product_id', 'discount', 'price']);
+        dd($result);
 
         // foreach ($list as $ingredient) {
         //     $result = $this->obj->get()

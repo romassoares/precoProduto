@@ -75,4 +75,8 @@ class Product extends Model
     {
         return $this->belongsTo('App\Sale');
     }
+    public function items()
+    {
+        return $this->belongsTo('App\Items');
+    }
 }
