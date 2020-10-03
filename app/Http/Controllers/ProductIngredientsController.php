@@ -60,8 +60,6 @@ class ProductIngredientsController extends Controller
     {
         $exist = $this->obj->get()->where('product_id', $product_id)->where('ingredient_id', $qnt->ingredient);
         foreach ($exist as $ing) {
-            // dd($ing->ingredient_id);
-            // dd($ing->ingredient_id == $qnt->ingredient);
             if ($ing->ingredient_id == $qnt->ingredient) {
                 $save = DB::table('product_ingredients')
                     ->where('product_id', $ing->product_id)

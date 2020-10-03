@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         $product = $request->only(['description', 'amount', 'und', 'price']);
         $result = $this->obj->cUpdate($product, $id);
-        return redirect()->route('produto.show', $result);
+        return redirect()->route('produto.show', $id);
     }
 
     /**

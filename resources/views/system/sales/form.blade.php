@@ -11,13 +11,11 @@
                     <div class="form-group col-6">
                         <h1>Nova venda</h1>
                     </div>
-                    <div class="form-group col-6 text-right">
-                        <h1 class="text-success">R$ 10,00</h1>
-                    </div>
+                    
                 </div>
 
                 <div class="card-body">
-                    <form role="form" action="{{route('venda.store',$client->id)}}" method="post" enctype="multipart/form-data">
+                    <form role="form" action="{{route('venda.addProduct',$client->id)}}" method="post" enctype="multipart/form-data">
                         {!! method_field('PUT') !!}
                         {!! csrf_field() !!}
                         <div class="row col-md-12">
@@ -29,10 +27,9 @@
                                 <label for="discount">Desconto</label>
                                 <input class="form-control" type="text" name="discount" id="discount" placeholder="Desconto" />
                             </div>
-                            <div class="form-group col-4">
-                                <label for="price">Preço</label>
-                                <input class="form-control" type="text" name="price" id="price" placeholder="preço" />
-                            </div>
+                            <div class="form-group col-4 text-right">
+                        <h1 class="text-success">{{$sale->getPrice()}}</h1>
+                    </div>
                         </div>
                         <div class="row">
                             <table class="table table">
@@ -43,13 +40,15 @@
                                     <th>Preço</th>
                                     <th>Total</th>
                                 </tr>
+                                @foreach($items as $item)
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->product->name}}</td>                                    
+                                    <td>{{$item->amount}}</td>
+                                    <td>{{$item->price}}</td>
+                                    <td>{{$item->amount*$item->price}}</td>
                                 </tr>
+                                @endforeach
                                 <tr>
                                     <div class="col-md-12">
                                         <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
@@ -78,7 +77,7 @@
             </div>
             <div class="modal-body ">
                 <div class="form-group" id="item">
-                    <form role="form" action="{{route('venda.addProduct', $client->id)}}" method="post" enctype="multipart/form-data">
+                    <form role="form" action="{{route('venda.addProduct', $sale->id)}}" method="post" enctype="multipart/form-data">
                         {!! method_field('PUT') !!}
                         {!! csrf_field() !!}
                         <div class="row col-md-12">
@@ -90,6 +89,7 @@
                                     </option>
                                     @endforeach
                                 </select>
+                                <input name="amount" id="amount" placeholder="Qnt"/>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">adcionar</button>

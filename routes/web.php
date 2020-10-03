@@ -61,9 +61,8 @@ Route::middleware('auth')->group(function () {
     // venda
     Route::group(['prefix' => '/venda'], function () {
         Route::get('', 'SaleController@index')->name('venda');
-        Route::get('/{id}/novo', 'SaleController@create')->name('venda.create');
         Route::put('/{id}/add-product', 'SaleController@addProduct')->name('venda.addProduct');
-        Route::get('/{id}/finalizando-venda', 'SaleController@store')->name('venda.store');
+        Route::post('/nova-venda', 'SaleController@store')->name('venda.store');
         Route::get('/{id}', 'SaleController@show')->name('venda.show');
         Route::get('/{id}/editar', 'SaleController@edit')->name('venda.edit');
         Route::put('/{id}/altera', 'SaleController@update')->name('venda.update');

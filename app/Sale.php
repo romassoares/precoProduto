@@ -37,11 +37,15 @@ class Sale extends Model
     }
     public function getPrice()
     {
-        return $this->price;
+        return number_format($this->price, 2, ',', '.');
     }
 
     public function Product()
     {
-        return $this->hasMany('App\Product');
+        return $this->belongsTo('App\Product');
+    }
+    public function Client()
+    {
+        return $this->belongsTo('App\Client');
     }
 }

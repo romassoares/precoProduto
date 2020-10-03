@@ -20,21 +20,20 @@
                                     </tr>
                                     <tr>
                                         <th>#</th>
-                                        <th>nome</th>
-                                        <th>und</th>
+                                        <th>cliente</th>
+                                        <th>valor</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($sales as $sale)
                                     <tr>
                                         <td>{{$sale->id}}</td>
-                                        <td>{{$sale->Product->description}}</td>
-                                        <td>{{$sale->und}}</td>
+                                        <td>{{$sale->client->name}}</td>
+                                        <td>{{$sale->getPrice()}}</td>
                                         <td>
                                             <div class="form-group">
-                                                <!-- <a href="{{route('venda.show',$ingredient->id)}}" class="text-primary m-1"><i class="fas fa-eye"></i></a> -->
-                                                <a href="{{route('venda.edit',$product->id)}}" class="text-warning m-2"><i class="fas fa-edit"></i></a>
-                                                <a href="{{route('venda.remove',$product->id)}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
+                                                <a href="{{route('venda.edit',$sale->id)}}" class="text-warning m-2"><i class="fas fa-edit"></i></a>
+                                                <a href="{{route('venda.remove',$sale->id)}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -60,36 +59,37 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Escolher clientes</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Escolher cliente</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body ">
-                <div class="form-group" id="item">
-                    <div class="row col-md-12">
-                        <div class="form-group">
-                            <label from="client_id">
-                                <select name="client_id" id="client_id">
+                <form role="form" action="{{route('venda.store')}}" method="post" enctype="multipart/form-data">
+                {!! csrf_field() !!}
+                    <div class="form-group" id="item">
+                        <div class="row col-md-12">
+                            <div class="form-group">
+                                <select name="client_id" id="client_id" class="form-control">
                                     @foreach($clients as $client)
                                     <option value="{{$client->id}}">{{$client->name}} </option>
                                     @endforeach
                                 </select>
-                            </label>
+                            </div>
                         </div>
+                        <button type="submit" class="btn btn-primary">iniciar venda</button>
                     </div>
-                    <button onclick="selecionar()" type="button" class="btn btn-primary">adcionar</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
-<script>
+<!-- <script>
     function selecionar(e) {
         const item = document.querySelector('#client_id');
         if (item != '') {
             window.location.href = '/venda/' + item.value + '/novo'
         }
     }
-</script>
+</script> -->
 @endsection

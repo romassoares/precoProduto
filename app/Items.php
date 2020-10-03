@@ -9,7 +9,7 @@ class Items extends Model
 {
     use SoftDeletes;
     protected $fillable = [
-        'client_id', 'discount', 'price'
+        'sale_id', 'product_id', 'price', 'amount'
     ];
 
     public function setClient($value)
@@ -43,6 +43,6 @@ class Items extends Model
     }
     public function Product()
     {
-        return $this->hasMany('App\Product');
+        return $this->belongsTo('App\Product');
     }
 }
