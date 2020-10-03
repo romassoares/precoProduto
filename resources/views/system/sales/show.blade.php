@@ -12,14 +12,30 @@
                     <div class="row">
                         <div class="col-md-4">
                             <div> <strong>Cliente</strong></div>
-                            {{$client->name}}
+                            {{$sale->Client->name}}
                         </div>
-                        <div class="col-md-4">
-                            <div><strong>Itens</strong></div>
-                            {{$sale->getItens()}}
+                        <div class="col-md-12">
+                        <table class="table table">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Produto</th>
+                                    <th>Qnt</th>
+                                    <th>Preço</th>
+                                    <th>Total</th>
+                                </tr>
+                                @foreach($items as $item)
+                                <tr>
+                                    <td>{{$item->id}}</td>
+                                    <td>{{$item->Product->description}}</td>                                    
+                                    <td>{{$item->amount}}</td>
+                                    <td>{{$item->price}}</td>
+                                    <td>{{$item->amount*$item->price}}</td>
+                                </tr>
+                                @endforeach
+                            </table>
                         </div>
                     </div>
-                    <a href="{{route('venda.edit', $result->id)}}"><button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Editar</button></a>
+                    <a href="{{route('venda.edit', $sale->id)}}"><button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Editar</button></a>
                 </div>
             </div>
         </div>

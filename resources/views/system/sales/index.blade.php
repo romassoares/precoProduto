@@ -32,6 +32,7 @@
                                         <td>{{$sale->getPrice()}}</td>
                                         <td>
                                             <div class="form-group">
+                                                <a href="{{route('venda.show',$sale->id)}}" class="text-primary m-1"><i class="fas fa-eye"></i></a>
                                                 <a href="{{route('venda.edit',$sale->id)}}" class="text-warning m-2"><i class="fas fa-edit"></i></a>
                                                 <a href="{{route('venda.remove',$sale->id)}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
                                             </div>

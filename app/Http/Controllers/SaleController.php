@@ -79,15 +79,18 @@ class SaleController extends Controller
 
     public function edit($id)
     {
-        
+        $sale = Sale::findorfail($id);  
+        $items = $this->item->get()->where('sale_id',$id);
+        $client = Client::findorfail($sale->client_id); 
+        $products = Product::all();
+        return view('system.sales.form', ['products' => $products, 'client' => $client, 'items'=>$items, 'sale'=>$sale]);
     }
 
-    public function Qnt($id, $ing)
+    public function show($id)
     {
-        
+        $sale = Sale::findorfail($id);  
+        $items = Items::get()->where('sale_id',$id);
+        return view('system.sales.show', ['items'=>$items, 'sale'=>$sale]);
     }
-    public function addQnt(Request $qnt, $product_id)
-    {
-       
-    }
+
 }
