@@ -25,11 +25,11 @@ class ClientRequest extends FormRequest
     {
         return [
             'name' => 'required|max:100|min: 3',
-            'city' => 'required|max:70|min: 3',
-            'district' => 'required|max:100|min:3',
-            'street' => 'required|max:100|min: 3',
-            'number' => 'required|numeric',
-            'contact' => 'required|max:11|min:8'
+            'city' => 'max:70|min: 3',
+            'district' => 'max:100|min:3',
+            'street' => 'max:100|min: 3',
+            'number' => 'numeric',
+            'contact' => 'max:11|min:8'
         ];
     }
 }

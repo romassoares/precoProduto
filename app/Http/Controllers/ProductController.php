@@ -38,9 +38,9 @@ class ProductController extends Controller
         $product = $request->only(['description', 'amount', 'und', 'price']);
         $salvo = $this->obj->cstore($product);
         if ($salvo) {
-            return redirect()->route('produto.show', $salvo->id);
+            return redirect()->route('produto.show', $salvo->id)->with('success','editado com sucesso');
         } else {
-            return redirect()->route('produto.create', compact('request'));
+            return redirect()->route('produto.create', compact('request'))->with('danger','erro ao tentar cadastrar o produto');
         }
     }
 
@@ -69,7 +69,7 @@ class ProductController extends Controller
     {
         $product = $request->only(['description', 'amount', 'und', 'price']);
         $result = $this->obj->cUpdate($product, $id);
-        return redirect()->route('produto.show', $id);
+        return redirect()->route('produto.show', $id)->with('success','editado com sucesso');
     }
 
     /**

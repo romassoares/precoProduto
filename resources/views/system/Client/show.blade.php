@@ -17,10 +17,6 @@
                             <div> <strong>Nome</strong></div>
                             {{$client->name}}
                         </div>
-                        <div class="col-md-6">
-                            <div> <strong>Email</strong></div>
-                            {{$client->email}}
-                        </div>
                         <div class="col-md-3">
                             <div><strong>Endereço</strong></div>
                             {{$client->city}}

@@ -30,7 +30,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $products = Product::all();
-        $client = Client::findorfail($request->client_id);
+        $client = Client::find($request->client_id);
         if($client){
             $save = new Sale();
             $result = $save->create([
@@ -39,9 +39,19 @@ class SaleController extends Controller
                 if($result){
                     $items = $this->item->get()->where('sale_id',$result->id);
                     return view('system.sales.form', ['products' => $products, 'client' => $client, 'sale'=>$result, 'items'=>$items]);
+                }
+            }else{
+                $client = Client::create([
+                    'name' => 'default'
+                    ]);
+                $save = new Sale();
+                $result = $save->create([
+                    'client_id' => $client->id 
+                    ]);
+                if($result){
+                    $items = $this->item->get()->where('sale_id',$result->id);
+                    return view('system.sales.form', ['products' => $products, 'client' => $client, 'sale'=>$result, 'items'=>$items]);
             }
-        }else{
-            // $this->index();
         }
     }
 
@@ -50,32 +60,65 @@ class SaleController extends Controller
         $existProduct = $this->prod->findorfail($request->product_id); 
         if($existProduct){
             $new = new Items();
-            $save = $new->create([
-                'sale_id' => $id,
-                'product_id'=>$existProduct->id,
-                'price'=> $existProduct->price,
-                'amount'=>$request->amount
+            $saleProdExist = $this->item->get()->where('product_id',$request->product_id)->where('sale_id',$id);
+            // ajustar condição pra permitir somente quando tiver produto em estoque
+            if(count($saleProdExist) == 0 && $existProduct->amount >= $request->amount){
+                $save = $new->create([
+                    'sale_id' => $id,
+                    'product_id'=>$existProduct->id,
+                    'price'=> $existProduct->price,
+                    'amount'=>$request->amount
                 ]);
-                if($save){
-                    $products = Product::all();
-                    $sale = Sale::findorfail($id);
-                    $items = $this->item->get()->where('sale_id',$sale->id);
-                    $priceTotal = $items->reduce(function($carry,$item){
-                        $priceItem = $item->price * $item->amount;
-                        return $carry + $priceItem; 
-                    });
-                    $save = DB::table('sales')
-                    ->where('id', $id)
-                    ->where('client_id', $sale->client_id)
-                    ->update(['price' => $priceTotal]);
-                    $client = Client::findorfail($sale->client_id);
-                    $items = $this->item->get()->where('sale_id',$id);
-                    $saleN = Sale::findorfail($id);
-                    // dd($saleN);
-                return view('system.sales.form', ['products' => $products, 'client' => $client, 'items'=>$items, 'sale'=>$saleN]);
-            }
+                $amountProd = $existProduct->update([
+                    'amount' => $existProduct->amount-$request->amount
+                ]);
+                return $this->Objs($save->sale_id);
+            }else{
+                foreach($saleProdExist as $p){
+                    if($p->product_id==$request->product_id){
+                        return $this->Amount($p, $existProduct,$request);
+                    }
+                }
+            }        
+            return redirect()->back();
         }
     }
+            
+    public function Amount($sale,$prod,$request){
+    dd('q');
+    $amount = $sale->amount+$request->amount;
+    if($prod->amount >= $amount){
+        $amountSale = $sale->update([
+            'amount' => $amount
+        ]);
+        $amountProd = $prod->update([
+            'amount' => $prod->amount-$amount
+        ]);
+        return $this->Objs($sale->sale_id);
+    }else{
+        return redirect()->route('venda.edit', $sale->sale_id)->with('error', 'estoque insuficiente');
+    }
+}
+
+public function Objs($id){
+    $products = Product::all();
+    $sale = Sale::findorfail($id);
+    $items = $this->item->get()->where('sale_id',$sale->id);
+    $priceTotal = $items->reduce(function($carry,$item){
+        $priceItem = $item->price * $item->amount;
+        return $carry + $priceItem; 
+    });
+    $save = DB::table('sales')
+    ->where('id', $id)
+    ->where('client_id', $sale->client_id)
+    ->update(['price' => $priceTotal]);
+    if($save){
+        $client = Client::findorfail($sale->client_id);
+        $items = $this->item->get()->where('sale_id',$id);
+        $saleN = Sale::findorfail($id);
+        return view('system.sales.form', ['products' => $products, 'client' => $client, 'items'=>$items, 'sale'=>$saleN])->with('success', 'cadastrado com successo');
+    }
+}
 
     public function edit($id)
     {

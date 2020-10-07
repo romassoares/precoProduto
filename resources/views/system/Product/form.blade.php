@@ -45,6 +45,7 @@
                     <option {{($result->und ?? '' === 'l') ? 'selected':''}} value="l">litro</option>
                     <option {{($result->und ?? '' === 'f') ? 'selected':''}} value="f">fatia</option>
                     <option {{($result->und ?? '' === 'und') ? 'selected':''}} value="und">unidade</option>
+                    <option {{($result->und ?? '' === 'pct') ? 'selected':''}} value="pct">pacote</option>
                   </select>
                 </div>
                 <div class="form-group col-md-6">
@@ -62,4 +63,10 @@
     </div>
   </div>
 </div>
+
+@if(session()->has('message'))
+            <div class="alert {{session('alert') ?? 'alert-info'}}">
+                {{ session('message') }}
+            </div>
+ @endif
 @endsection

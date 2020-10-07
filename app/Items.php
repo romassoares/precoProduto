@@ -20,21 +20,28 @@ class Items extends Model
     {
         return $this->client_id;
     }
-    public function setDiscount($value)
-    {
-        $this->discount = $value;
-    }
-    public function getDiscount()
-    {
-        return $this->discount;
-    }
     public function setPrice($value)
     {
         $this->price = $value;
     }
     public function getPrice()
     {
-        return $this->price;
+        return number_format($this->price, 2, ',', '.');
+    }
+
+    public function setAmount($value)
+    {
+        $this->amount = $value;
+    }
+    public function getAmout()
+    {
+        return $this->amount;
+    }
+
+    public function getPriceTot()
+    {
+        $priceT = floatval($this->price)*floatval($this->amount);
+        return number_format($priceT, 2, ',', '.');
     }
 
     public function Sale()

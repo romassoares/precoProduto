@@ -55,7 +55,8 @@ class ClientController extends Controller
     {
         $client = $request->only(['name', 'city', 'district', 'street', 'number', 'contact']);
         $result = $this->obj->cUpdate($client, $id);
-        return redirect()->route('cliente.show', ['client' => $result]);
+        $client = $this->obj->find($id);
+        return view('system/Client/show', ['client' => $client]);
     }
 
     public function destroy(Client $client)

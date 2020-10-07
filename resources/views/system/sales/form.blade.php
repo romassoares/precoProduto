@@ -3,6 +3,9 @@
 @section('content_header')
 @stop
 @section('content')
+@if(session('error'))
+    @include('components.toast', ['msg' => session('error') ])
+@endif
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -28,7 +31,7 @@
                                 <input class="form-control" type="text" name="discount" id="discount" placeholder="Desconto" />
                             </div>
                             <div class="form-group col-4 text-right">
-                        <h1 class="text-success">{{$sale->getPrice()}}</h1>
+                        <h1 class="text-success">R$ {{$sale->getPrice()}}</h1>
                     </div>
                         </div>
                         <div class="row">
@@ -40,13 +43,16 @@
                                     <th>Preço</th>
                                     <th>Total</th>
                                 </tr>
+                                @php
+                                $i = 0;
+                                @endphp
                                 @foreach($items as $item)
                                 <tr>
-                                    <td>{{$item->id}}</td>
+                                    <td>{{$i++}}</td>
                                     <td>{{$item->product->description}}</td>                                    
                                     <td>{{$item->amount}}</td>
-                                    <td>{{$item->price}}</td>
-                                    <td>{{$item->amount*$item->price}}</td>
+                                    <td>R$ {{$item->getPrice()}}</td>
+                                    <td>R$ {{$item->getPriceTot()}}</td>
                                 </tr>
                                 @endforeach
                                 <tr>
@@ -99,4 +105,5 @@
         </div>
     </div>
 </div>
+
 @endsection

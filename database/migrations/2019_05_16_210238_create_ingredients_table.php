@@ -16,7 +16,7 @@ class CreateIngredientsTable extends Migration
         Schema::create('ingredients', function (Blueprint $table) {
             $table->id();
             $table->string('description', 100);
-            $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f']);
+            $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f', 'pct']);
             $table->decimal('amount', 8, 3);
             $table->decimal('price', 7, 2);
             $table->timestamps();

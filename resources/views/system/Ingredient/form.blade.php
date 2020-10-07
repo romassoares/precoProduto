@@ -44,6 +44,7 @@
                     <option {{($result->und ?? '' === 'cm²') ? 'selected':''}} value="cm²">centimetro quadrado</option>
                     <option {{($result->und ?? '' === 'l') ? 'selected':''}} value="l">litro</option>
                     <option {{($result->und ?? '' === 'f') ? 'selected':''}} value="f">fatia</option>
+                    <option {{($result->und ?? '' === 'pct') ? 'selected':''}} value="pct">pacote</option>
                     <option {{($result->und ?? '' === 'und') ? 'selected':''}} value="und">unidade</option>
                   </select>
                 </div>

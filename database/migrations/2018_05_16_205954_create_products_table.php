@@ -16,7 +16,7 @@ class CreateProductsTable extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('description', 100);
-            $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f']);
+            $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f', 'pct']);
             $table->decimal('price', 7, 2);
             $table->integer('amount');
             $table->timestamps();
