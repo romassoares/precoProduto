@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
-
     private $obj, $ing;
 
     public function __construct(Product $obj, Ingredient $ing, ProductIngredients $pr)
@@ -49,14 +48,7 @@ class ProductController extends Controller
         $result = $this->obj->with('Ingredients')->find($id);
         $ingredient = $this->ing->all();
         $valGasto = $this->pr->where('product_id', $id)->get();
-        return view(
-            'system/Product/show',
-            [
-                'result' => $result,
-                'ingredient' => $ingredient,
-                'valGasto' => $valGasto
-            ]
-        );
+        return view('system/Product/show', ['result' => $result,'ingredient' => $ingredient,'valGasto' => $valGasto]);
     }
 
     public function edit($id)
@@ -72,14 +64,32 @@ class ProductController extends Controller
         return redirect()->route('produto.show', $id)->with('success','editado com sucesso');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
+    public function destroy($id)
     {
-        //
+        $product = $this->obj->findorfail($id);
+        if($product){
+            $result = $product->delete();
+            if($result){
+                return redirect()->route('produto')->with('success','produto removido com sucesso');
+            }
+        }else{
+            return redirect()->route('produto')->with('warning', 'erro, produto não encontrado');
+        }
+    }
+
+    public function archive()
+    {
+        $result = $this->obj->withTrashed()->where('deleted_at', '!=', null)->get();
+        return view('system/Product/deleted', compact('result'));
+    }
+
+    public function restory($id){
+        $result = $this->obj->withTrashed()->where('id',$id)->first();
+        if($result){
+            $res = $result->restore();
+            if($res){
+                return redirect()->route('produto.show',$id)->with('success','arquivo restaurado com sucesso');
+            }
+        }
     }
 }

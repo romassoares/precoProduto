@@ -17,11 +17,13 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'ProductController@index')->name('produto');
         Route::get('/novo', 'ProductController@create')->name('produto.create');
         Route::post('/salvar', 'ProductController@store')->name('produto.store');
-        Route::get('/{id}', 'ProductController@show')->name('produto.show');
+        Route::get('/{id}/exibir', 'ProductController@show')->name('produto.show');
         Route::get('/{id}/editar', 'ProductController@edit')->name('produto.edit');
-        Route::put('/{id}/altera', 'ProductController@update')->name('produto.update');
-        Route::delete('/{id}/remove', 'ProductController@remove')->name('produto.remove');
-        Route::put('/{id}/restaura', 'ProductController@restore')->name('produto.restore');
+        Route::put('/{id}/alterar', 'ProductController@update')->name('produto.update');
+        Route::get('/{id}/remover', 'ProductController@destroy')->name('produto.remove');
+        Route::put('/{id}/restaurar', 'ProductController@restore')->name('produto.restore');
+        Route::get('/removidos', 'ProductController@archive')->name('produto.archive');
+        Route::get('/{id}/restaurar', 'ProductController@restory')->name('produto.restory');
     });
 
     // Ingredient

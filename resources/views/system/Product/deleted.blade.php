@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Produtos</h3>
+              <h3 class="card-title">Produtos excluídos</h3>
             </div>
             <div class="card-body p-0">
               <table class="table table-striped">
@@ -32,9 +32,7 @@
                     <td>R$ {{$product->getPrice()}}</td>
                     <td>
                       <div class="form-group">
-                        <a href="{{route('produto.show',$product->id)}}" class="text-primary m-1"><i class="fas fa-eye"></i></a>
-                        <a href="{{route('produto.edit',$product->id)}}" class="text-warning m-2"><i class="fas fa-edit"></i></a>
-                        <a href="{{route('produto.remove',$product->id)}}" class="text-danger m-1"><i class="fas fa-archive"></i></a>
+                        <a href="{{route('produto.restory',$product->id)}}" class="text-success m-1"><i class="fas fa-redo-alt"></i></a>
                       </div>
                     </td>
                   </tr>
@@ -43,8 +41,7 @@
               </table>
             </div>
             <div class="card-footer">
-              <a href="/produto/novo"><button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button></a>
-              <a href="{{route('produto.archive')}}" > <button class="btn btn-primary" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
+              <a href="{{route('produto')}}"><button class="btn btn-secundary"><i class="fas fa-reply"></i> Voltar</button></a>
             </div>
           </div>
         </div>
