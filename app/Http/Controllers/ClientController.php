@@ -17,7 +17,7 @@ class ClientController extends Controller
 
     public function index()
     {
-        $clients = $this->obj->all();
+        $clients = $this->obj->paginate(15);
         return view('system/Client/index', ['clients' => $clients]);
     }
 
