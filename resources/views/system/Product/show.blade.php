@@ -82,7 +82,7 @@
                         @php
                         $lucrototal = ($result->price*$result->amount)-$totgast;
                         @endphp
-                        <td>{{$lucrototal}} </td>
+                        <td>R$ {{number_format($lucrototal,3,',','.')}} </td>
                     </tr>
                     <tr>
                         <div class="col-md-12">

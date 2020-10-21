@@ -38,7 +38,6 @@ class ClientController extends Controller
 
     public function show($id)
     {
-        dd('shoe');
         $result = $this->obj->find($id);
         return view('system/Client/show', ['client' => $result]);
     }
@@ -72,7 +71,6 @@ class ClientController extends Controller
 
     public function archive()
     {
-        dd('oi');
         $result = $this->obj->withTrashed()->where('deleted_at', '!=', null)->get();
         return view('system/Client/deleted', compact('result'));
     }

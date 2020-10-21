@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'IngredientController@index')->name('ingrediente');
         Route::get('/novo', 'IngredientController@create')->name('ingrediente.create');
         Route::post('/salvar', 'IngredientController@store')->name('ingrediente.store');
-        Route::get('/{id}', 'IngredientController@show')->name('ingrediente.show');
+        Route::get('/{id}/exibir', 'IngredientController@show')->name('ingrediente.show');
         Route::get('/{id}/editar', 'IngredientController@edit')->name('ingrediente.edit');
         Route::put('/{id}/altera', 'IngredientController@update')->name('ingrediente.update');
         Route::get('/{id}/remover', 'IngredientController@destroy')->name('ingrediente.remove');
@@ -39,7 +39,6 @@ Route::middleware('auth')->group(function () {
     });
 
     // IngredientProduto
-
     Route::put('produto/{id}/altera-ingredient', 'ProductIngredientsController@update')->name('produtoIngrediente.update');
     Route::delete('produto/{id}/remove-ingredient', 'ProductIngredientsController@remove')->name('produtoIngrediente.remove');
     Route::put('produto/{id}/restaura-ingredient', 'ProductIngredientsController@restore')->name('produtoIngrediente.restore');
@@ -53,7 +52,7 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'ClientController@index')->name('cliente');
         Route::get('/novo', 'ClientController@create')->name('cliente.create');
         Route::post('/salvar', 'ClientController@store')->name('cliente.store');
-        Route::get('/{id}', 'ClientController@show')->name('cliente.show');
+        Route::get('/{id}/exibir', 'ClientController@show')->name('cliente.show');
         Route::get('/{id}/editar', 'ClientController@edit')->name('cliente.edit');
         Route::put('/{id}/altera', 'ClientController@update')->name('cliente.update');
         Route::get('/{id}/remover', 'ClientController@destroy')->name('cliente.remove');
@@ -66,7 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::get('', 'SaleController@index')->name('venda');
         Route::put('/{id}/add-product', 'SaleController@addProduct')->name('venda.addProduct');
         Route::post('/nova-venda', 'SaleController@store')->name('venda.store');
-        Route::get('/{id}', 'SaleController@show')->name('venda.show');
+        Route::get('/{id}/exibir', 'SaleController@show')->name('venda.show');
         Route::get('/{id}/editar', 'SaleController@edit')->name('venda.edit');
         Route::put('/{id}/altera', 'SaleController@update')->name('venda.update');
         Route::get('/{id}/remover', 'SaleController@destroy')->name('venda.remove');

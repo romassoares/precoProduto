@@ -134,7 +134,7 @@ class SaleController extends Controller
     public function archive()
     {
         $result = $this->obj->withTrashed()->where('deleted_at', '!=', null)->get();
-        return view('system/sales/deleted', compact('result'));
+        return view('system.sales.deleted', compact('result'));
     }
 
     public function restory($id){
