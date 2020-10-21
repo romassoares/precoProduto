@@ -17,7 +17,7 @@ class IngredientController extends Controller
 
     public function index()
     {
-        $result = $this->obj->all();
+        $result = $this->obj->paginate(10);
         return view('system/Ingredient/index', compact('result'));
     }
 

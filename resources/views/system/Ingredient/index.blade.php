@@ -43,6 +43,7 @@
                   @endforeach
                 </tbody>
               </table>
+            {{ $result->links() }}
             </div>
             <div class="card-footer">
               <a href="/ingrediente/novo"><button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button></a>

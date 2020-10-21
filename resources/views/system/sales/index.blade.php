@@ -41,6 +41,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                            {{ $sales->links() }}
                         </div>
                         <div class="card-footer">
                             <div class="col-md-12">

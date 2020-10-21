@@ -41,9 +41,9 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $clients->links() }}
                         </div>
                         <div class="card-footer">
+                            {{ $clients->links() }}
                             <a href="/cliente/novo"><button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button></a>
                         </div>
                     </div>

@@ -22,9 +22,9 @@ class SaleController extends Controller
 
     public function index()
     {
-        $result = Sale::get()->all();
+        $sales = $this->obj->paginate(10);
         $clients = Client::get()->all();
-        return view('system.sales.index', ['sales' => $result, 'clients' => $clients]);
+        return view('system.sales.index', ['sales' => $sales, 'clients' => $clients]);
     }
 
     public function store(Request $request)
