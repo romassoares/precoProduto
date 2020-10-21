@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/editar', 'ProductController@edit')->name('produto.edit');
         Route::put('/{id}/alterar', 'ProductController@update')->name('produto.update');
         Route::get('/{id}/remover', 'ProductController@destroy')->name('produto.remove');
-        Route::put('/{id}/restaurar', 'ProductController@restore')->name('produto.restore');
         Route::get('/removidos', 'ProductController@archive')->name('produto.archive');
         Route::get('/{id}/restaurar', 'ProductController@restory')->name('produto.restory');
     });
@@ -34,8 +33,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'IngredientController@show')->name('ingrediente.show');
         Route::get('/{id}/editar', 'IngredientController@edit')->name('ingrediente.edit');
         Route::put('/{id}/altera', 'IngredientController@update')->name('ingrediente.update');
-        Route::delete('/{id}/remove', 'IngredientController@remove')->name('ingrediente.remove');
-        Route::put('/{id}/restaura', 'IngredientController@restore')->name('ingrediente.restore');
+        Route::get('/{id}/remover', 'IngredientController@destroy')->name('ingrediente.remove');
+        Route::get('/removidos', 'IngredientController@archive')->name('ingrediente.archive');
+        Route::get('/{id}/restaurar', 'IngredientController@restory')->name('ingrediente.restory');
     });
 
     // IngredientProduto
@@ -56,8 +56,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'ClientController@show')->name('cliente.show');
         Route::get('/{id}/editar', 'ClientController@edit')->name('cliente.edit');
         Route::put('/{id}/altera', 'ClientController@update')->name('cliente.update');
-        Route::delete('/{id}/remove', 'ClientController@remove')->name('cliente.remove');
-        Route::put('/{id}/restaura', 'ClientController@restore')->name('cliente.restore');
+        Route::get('/{id}/remover', 'ClientController@destroy')->name('cliente.remove');
+        Route::get('/removidos', 'ClientController@archive')->name('cliente.archive');
+        Route::get('/{id}/restaurar', 'ClientController@restory')->name('cliente.restory');
     });
 
     // venda
@@ -68,7 +69,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}', 'SaleController@show')->name('venda.show');
         Route::get('/{id}/editar', 'SaleController@edit')->name('venda.edit');
         Route::put('/{id}/altera', 'SaleController@update')->name('venda.update');
-        Route::delete('/{id}/remove', 'SaleController@remove')->name('venda.remove');
-        Route::put('/{id}/restaura', 'SaleController@restore')->name('venda.restore');
+        Route::get('/{id}/remover', 'SaleController@destroy')->name('venda.remove');
+        Route::get('/removidos', 'SaleController@archive')->name('venda.archive');
+        Route::get('/{id}/restaurar', 'SaleController@restory')->name('venda.restory');
     });
 });

@@ -23,7 +23,7 @@ class SaleController extends Controller
     public function index()
     {
         $sales = $this->obj->paginate(10);
-        $clients = Client::get()->all();
+        $clients = Client::withTrashed()->get();
         return view('system.sales.index', ['sales' => $sales, 'clients' => $clients]);
     }
 
@@ -118,5 +118,34 @@ class SaleController extends Controller
         $items = Items::get()->where('sale_id',$id);
         return view('system.sales.show', ['items'=>$items, 'sale'=>$sale]);
     }
+    public function destroy($id)
+    {
+        $product = $this->obj->findorfail($id);
+        if($product){
+            $result = $product->delete();
+            if($result){
+                return redirect()->route('venda')->with('success','venda removido com sucesso');
+            }
+        }else{
+            return redirect()->route('venda')->with('warning', 'erro, venda não encontrado');
+        }
+    }
 
+    public function archive()
+    {
+        $result = $this->obj->withTrashed()->where('deleted_at', '!=', null)->get();
+        return view('system/sales/deleted', compact('result'));
+    }
+
+    public function restory($id){
+        $result = $this->obj->withTrashed()->where('id',$id)->first();
+        if($result){
+            $res = $result->restore();
+            if($res){
+                return redirect()->route('venda.show',$id)->with('success','arquivo restaurado com sucesso');
+            }
+        }
+    }
 }
+
+

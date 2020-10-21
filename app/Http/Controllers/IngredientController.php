@@ -53,8 +53,33 @@ class IngredientController extends Controller
         $result = $this->obj->cUpdate($ingredient, $id);
         return redirect()->route('ingrediente.show', $result);
     }
-    public function destroy(Ingredient $ingredient)
+    public function destroy($id)
     {
-        //
+        $ingredient = $this->obj->findorfail($id);
+        if($ingredient){
+            $result = $ingredient->delete();
+            if($result){
+                return redirect()->route('ingrediente')->with('success','ingrediente removido com sucesso');
+            }
+        }else{
+            return redirect()->route('ingrediente')->with('warning', 'erro, ingrediente não encontrado');
+        }
+    }
+
+    public function archive()
+    {
+        $result = $this->obj->withTrashed()->where('deleted_at', '!=', null)->get();
+        return view('system/Ingredient/deleted', ['result' => $result]);
+    }
+
+    public function restory($id){
+        $result = $this->obj->withTrashed()->where('id',$id)->first();
+        if($result){
+            $res = $result->restore();
+            if($res){
+                return redirect()->route('ingrediente.show',$id)->with('success','arquivo restaurado com sucesso');
+            }
+        }
     }
 }
+

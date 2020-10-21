@@ -28,7 +28,13 @@
                                     @foreach($sales as $sale)
                                     <tr>
                                         <td>{{$sale->id}}</td>
-                                        <td>{{$sale->client->name}}</td>
+                                        @foreach($clients as $client)
+                                            @if($sale->client_id == $client->id)
+                                                <td {{$client->deleted_at != null ? "class=text-danger ": ''}} >
+                                                    {{$client->name}}
+                                                </td>
+                                            @endif
+                                        @endforeach
                                         <td>{{$sale->getPrice()}}</td>
                                         <td>
                                             <div class="form-group">
@@ -48,6 +54,7 @@
                                 <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
                                     Nova venda
                                 </button>
+                                <a href="{{route('venda.archive')}}" > <button class="btn btn-primary" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
                             </div>
                         </div>
                     </div>

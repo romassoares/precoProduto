@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class ClientController extends Controller
 {
     private $obj;
-
     public function __construct(Client $obj)
     {
         $this->obj = $obj;
@@ -20,7 +19,6 @@ class ClientController extends Controller
         $clients = $this->obj->paginate(10);
         return view('system/Client/index', ['clients' => $clients]);
     }
-
 
     public function create()
     {
@@ -38,9 +36,9 @@ class ClientController extends Controller
         }
     }
 
-
     public function show($id)
     {
+        dd('shoe');
         $result = $this->obj->find($id);
         return view('system/Client/show', ['client' => $result]);
     }
@@ -59,8 +57,34 @@ class ClientController extends Controller
         return view('system/Client/show', ['client' => $client]);
     }
 
-    public function destroy(Client $client)
+    public function destroy($id)
     {
-        //
+        $client = $this->obj->findorfail($id);
+        if($client){
+            $result = $client->delete();
+            if($result){
+                return redirect()->route('cliente')->with('success','cliente removido com sucesso');
+            }
+        }else{
+            return redirect()->route('cliente')->with('warning', 'erro, cliente não encontrado');
+        }
+    }
+
+    public function archive()
+    {
+        dd('oi');
+        $result = $this->obj->withTrashed()->where('deleted_at', '!=', null)->get();
+        return view('system/Client/deleted', compact('result'));
+    }
+
+    public function restory($id){
+        $result = $this->obj->withTrashed()->where('id',$id)->first();
+        if($result){
+            $res = $result->restore();
+            if($res){
+                return redirect()->route('cliente.show',$id)->with('success','arquivo restaurado com sucesso');
+            }
+        }
     }
 }
+
