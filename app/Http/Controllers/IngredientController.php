@@ -51,7 +51,7 @@ class IngredientController extends Controller
     {
         $ingredient = $request->only(['description', 'amount', 'und', 'price']);
         $result = $this->obj->cUpdate($ingredient, $id);
-        return redirect()->route('ingrediente.show', $result);
+        return redirect()->route('ingrediente.show', $id);
     }
     public function destroy($id)
     {

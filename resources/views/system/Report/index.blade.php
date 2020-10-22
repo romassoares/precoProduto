@@ -5,13 +5,13 @@
 @section('content')
 <div class="container">
   <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-12">
       <div class="card">
-        <div class="card-header">Report</div>
+        <div class="card-header">Relatórios</div>
         <div class="card-body">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Striped Full Width Table</h3>
+              <h3 class="card-title">Títulos</h3>
             </div>
             <div class="card-body p-0">
               <table class="table table-striped">
