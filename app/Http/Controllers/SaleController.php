@@ -30,7 +30,7 @@ class SaleController extends Controller
     public function store(Request $request)
     {
         $products = Product::all();
-        $client = Client::find($request->client_id);
+        $client = Client::withTrashed('client_id',$request->client_id)->get();
         if($client){
             $save = new Sale();
             $result = $save->create(['client_id' => $client->id]);
@@ -107,15 +107,15 @@ class SaleController extends Controller
     {
         $sale = Sale::findorfail($id);  
         $items = $this->item->get()->where('sale_id',$id);
-        $client = Client::findorfail($sale->client_id); 
+        $client = Client::withTrashed('client_id','==',$sale->client_id)->get(); 
         $products = Product::all();
         return view('system.sales.form', ['products' => $products, 'client' => $client, 'items'=>$items, 'sale'=>$sale]);
     }
 
     public function show($id)
     {
-        $sale = Sale::findorfail($id);  
-        $items = Items::get()->where('sale_id',$id);
+        $sale = Sale::findorfail($id);
+        $items = Items::withTrashed('sale_id',$id)->get();
         return view('system.sales.show', ['items'=>$items, 'sale'=>$sale]);
     }
     public function destroy($id)

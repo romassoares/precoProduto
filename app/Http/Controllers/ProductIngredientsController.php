@@ -24,8 +24,9 @@ class ProductIngredientsController extends Controller
         return view('system.product.productIngredient', compact('product', 'ingredients'));
     }
 
+    // adciona ingrediente a receita
     public function update(Request $request, $product_id)
-    {
+    {    
         $product = Product::findorfail($product_id);
         $list = $request->except(['_method', '_token']);
         foreach ($list as $ingredient) {
@@ -48,6 +49,7 @@ class ProductIngredientsController extends Controller
         }
     }
     
+    // redireciona para a pagina de adicionar a quantidade 
     public function Qnt($id, $ing)
     {
         $result = $this->obj->where('product_id', $id)->where('ingredient_id', $ing)->get()->first();
@@ -55,6 +57,7 @@ class ProductIngredientsController extends Controller
         return view('system.Product.recipe', ['result' => $result, 'ingredient' => $ingredient]);
     }
 
+    // adicionar a quantidade de ingrediente a receita
     public function addQnt(Request $qnt, $product_id)
     {
         $exist = $this->obj->get()->where('product_id', $product_id)->where('ingredient_id', $qnt->ingredient);

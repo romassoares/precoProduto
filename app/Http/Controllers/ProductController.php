@@ -45,10 +45,10 @@ class ProductController extends Controller
 
     public function show($id)
     {
-        $result = $this->obj->with('Ingredients')->find($id);
-        $ingredient = $this->ing->all();
+        $product = $this->obj->findorfail($id);
+        $ingredient = $this->ing->withTrashed()->get();
         $valGasto = $this->pr->where('product_id', $id)->get();
-        return view('system/Product/show', ['result' => $result,'ingredient' => $ingredient,'valGasto' => $valGasto]);
+        return view('system/Product/show', ['result' => $product,'ingredient' => $ingredient,'valGasto' => $valGasto]);
     }
 
     public function edit($id)

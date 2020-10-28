@@ -57,7 +57,7 @@
                         @php
                         $totgast += str_replace(array('.', ','), array('', '.'), $val->getValGasto());
                         @endphp
-                        <td>{{$val->ingredient->description}}</td>
+                        <td>{{$val->Ingredient->description}}</td>
                         <td>{{$val->getQnt()}}</td>
                         <td>R$ {{$val->getValGasto()}}</td>
                         <td><a href="{{route('proIngQnt.qnt', [$val->product_id,$val->ingredient_id]) }}">Editar qnt de ingrediente</a></td>

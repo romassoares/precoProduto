@@ -71,7 +71,6 @@ class Ingredient extends Model
 
     public function Products()
     {
-
         return $this->belongsToMany('App\Product', 'ProductIngredients', 'ingredient_id', 'product_id');
     }
 }
