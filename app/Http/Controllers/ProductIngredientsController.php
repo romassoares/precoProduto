@@ -84,17 +84,14 @@ class ProductIngredientsController extends Controller
     }
 
     public function remove ($prod, $ing){
-        // busca o item na tabela product_ingredient
-        $result = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->get()->first();
-        $deleted = $result->delete();//está dando erro AQUIIIIIIII
-        if($deleted){
-            // salva a quantidade de ingrediente do item
-            $amount = $result->qnt;
-            // busca o ingrediente
-            $product = Ingredient::where($prod)->get()->first();
-            // repoem a quantidade no ingrediente
-            $restoreAmount = $product->update(['amount'=>$product->amount+$amount]);
-            if($restoreAmount){
+        $recipe = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->get()->first();
+        $result = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->delete();
+        if($result == 1){
+            // dd($recipe);
+            $ingredient = Ingredient::where('id',$ing)->get()->first();
+            $amount = $recipe->qnt == null ? 0 : $recipe->qnt;
+            $restoreAmount = $ingredient->update(['amount'=>$ingredient->amount+$amount]);
+            if(isset($restoreAmount)){
                 return redirect()->route('produto.show',$prod)->with('ingrediente removido com sucesso');
             }
         }
