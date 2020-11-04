@@ -82,4 +82,22 @@ class ProductIngredientsController extends Controller
             redirect()->back()->with('warning', 'ocorreu um erro, recarregue a pagina e tente novamente');
         }
     }
+
+    public function remove ($prod, $ing){
+        // busca o item na tabela product_ingredient
+        $result = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->get()->first();
+        $deleted = $result->delete();//está dando erro AQUIIIIIIII
+        if($deleted){
+            // salva a quantidade de ingrediente do item
+            $amount = $result->qnt;
+            // busca o ingrediente
+            $product = Ingredient::where($prod)->get()->first();
+            // repoem a quantidade no ingrediente
+            $restoreAmount = $product->update(['amount'=>$product->amount+$amount]);
+            if($restoreAmount){
+                return redirect()->route('produto.show',$prod)->with('ingrediente removido com sucesso');
+            }
+        }
+    }
+
 }
