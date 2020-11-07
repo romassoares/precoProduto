@@ -60,7 +60,12 @@
                         <td>{{$val->Ingredient->description}}</td>
                         <td>{{$val->getQnt()}}</td>
                         <td>R$ {{$val->getValGasto()}}</td>
-                        <td><a href="{{route('proIngQnt.qnt', [$val->product_id,$val->ingredient_id]) }}">Editar qnt de ingrediente</a></td>
+                        <td>
+                            <div class="form-group">
+                                <a href="{{route('proIngQnt.qnt', [$val->product_id,$val->ingredient_id]) }}" class="text-warning m-1" >Editar qnt de ingrediente</a>
+                                <a href="{{route('produtoIngrediente.remove', [$val->product_id,$val->ingredient_id]) }}" class="text-danger m-1" ><i class="fas fa-archive"></i></a>
+                            </div>
+                        </td>
                     </tr>
                     @endforeach
                     <tr>

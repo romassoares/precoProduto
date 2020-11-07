@@ -82,4 +82,19 @@ class ProductIngredientsController extends Controller
             redirect()->back()->with('warning', 'ocorreu um erro, recarregue a pagina e tente novamente');
         }
     }
+
+    public function remove ($prod, $ing){
+        $recipe = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->get()->first();
+        $result = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->delete();
+        if($result == 1){
+            // dd($recipe);
+            $ingredient = Ingredient::where('id',$ing)->get()->first();
+            $amount = $recipe->qnt == null ? 0 : $recipe->qnt;
+            $restoreAmount = $ingredient->update(['amount'=>$ingredient->amount+$amount]);
+            if(isset($restoreAmount)){
+                return redirect()->route('produto.show',$prod)->with('ingrediente removido com sucesso');
+            }
+        }
+    }
+
 }
