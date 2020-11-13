@@ -54,7 +54,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="contact">Contato</label>
-                                    <input type="number" name="contact" id="contact" class="form-control" placeholder="Digite o(s) contato(s)" value="{{isset($result->contact)?$result->number:old('contact')}}">
+                                    <input type="tel" name="contact" id="contact" class="form-control" placeholder="Digite o(s) contato(s)" value="{{isset($result->contact)?$result->number:old('contact')}}">
                                     @error('contact')
                                     <p class="text-danger">{{$message??''}}</p>
                                     @enderror
