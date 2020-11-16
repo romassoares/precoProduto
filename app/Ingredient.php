@@ -39,7 +39,8 @@ class Ingredient extends Model
     }
     public function getAmount()
     {
-        return $this->amount;
+        // dd(str_replace(array('','.'),array('.',','),$this->amount));
+        return str_replace(array('','.'),array('.',','),$this->amount);
     }
 
     public function setPrice($value)

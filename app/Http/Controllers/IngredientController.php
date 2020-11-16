@@ -53,6 +53,7 @@ class IngredientController extends Controller
         $result = $this->obj->cUpdate($ingredient, $id);
         return redirect()->route('ingrediente.show', $id);
     }
+    
     public function destroy($id)
     {
         $ingredient = $this->obj->findorfail($id);

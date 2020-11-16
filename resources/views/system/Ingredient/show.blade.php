@@ -20,7 +20,7 @@
             </div>
             <div class="col-md-4">
               <div><strong>Quantidade</strong></div>
-              {{$result->amount}}
+              {{$result->getAmount()}}
             </div>
             <div class="col-md-4">
               <div><strong>Preço</strong></div>

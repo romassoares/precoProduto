@@ -17,7 +17,7 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('description', 100);
             $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f', 'pct']);
-            $table->decimal('price', 7, 2);
+            $table->string('price', 9);
             $table->integer('amount');
             $table->timestamps();
             $table->softDeletes();

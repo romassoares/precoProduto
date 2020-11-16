@@ -28,7 +28,7 @@
                   <tr>
                     <td>{{$product->id}}</td>
                     <td>{{$product->description}}</td>
-                    <td>{{$product->amount}}</td>
+                    <td>{{$product->getAmount()}}</td>
                     <td>R$ {{$product->getPrice()}}</td>
                     <td>
                       <div class="form-group">

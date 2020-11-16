@@ -48,6 +48,7 @@ class SaleController extends Controller
             }
         }
     }
+    
     public function addProduct(Request $request, $id) {
         $product = $this->prod->find($request->product_id);
         if ($product && $product->amount >= $request->amount) {
@@ -82,59 +83,6 @@ class SaleController extends Controller
             return redirect()->route('venda.edit', $id)->with('error', 'estoque insuficiente');            
         }
     }
-    // public function addProduct(Request $request, $id)
-    // {
-    //     $existProduct = $this->prod->findorfail($request->product_id); 
-    //     if($existProduct){
-    //         $new = new Items();
-    //         $saleProdExist = $this->item->get()->where('product_id',$request->product_id)->where('sale_id',$id);
-    //         if(count($saleProdExist) == 0 && $existProduct->amount >= $request->amount){
-    //             $save = $new->create([
-    //                 'sale_id' => $id,
-    //                 'product_id'=>$existProduct->id,
-    //                 'price'=> $existProduct->price,
-    //                 'amount'=>$request->amount
-    //                 ]);
-    //                 $amountProd = $existProduct->update(['amount' => $existProduct->amount-$request->amount
-    //                 ]);
-    //                 return $this->Objs($save);
-    //             } elseif (count($saleProdExist) > 0 && $existProduct->amount >= $request->amount ) {
-    //             foreach($saleProdExist as $p){
-    //                 if($p->product_id==$request->product_id){
-    //                     return $this->Amount($p, $existProduct,$request);
-    //                 }
-    //             }
-    //         }else{
-    //             return redirect()->route('venda.edit', $id)->with('error', 'estoque insuficiente');
-    //         }        
-    //     }
-    // }
-            
-    // public function Amount($sale,$prod,$request){
-    //     $amount = $sale->amount+$request->amount;
-    //     $amountSale = $sale->update(['amount' => $amount]);
-    //     $amountProd = $prod->update(['amount' => $prod->amount-$request->amount]);
-    //     return $this->Objs($sale);
-    // }
-
-    // public function Objs($sale){
-    //     $products = Product::all();
-    //     $items = $this->item->get()->where('sale_id',$sale->id);
-    //     $priceTotal = $items->reduce(function($carry,$item){
-    //         $priceItem = $item->price * $item->amount;
-    //         return $carry + $priceItem; 
-    //     });
-    //     $save = DB::table('sales')
-    //         ->where('id', $sale->id)
-    //         ->where('client_id', $sale->client_id)
-    //         ->update(['price' => $priceTotal]);
-    //     if($save){
-    //         $client = Client::findorfail($sale->client_id);
-    //         $items = $this->item->get()->where('sale_id',$sale->id);
-    //         $saleN = Sale::findorfail($sale->id);
-    //         return view('system.sales.form', ['products' => $products, 'client' => $client, 'items'=>$items, 'sale'=>$saleN])->with('success', 'cadastrado com successo');
-    //     }
-    // }
 
     public function edit($id)
     {

@@ -29,7 +29,7 @@ class ClientRequest extends FormRequest
             'district' => 'max:100|min:3',
             'street' => 'max:100|min: 3',
             'number' => 'numeric',
-            'contact' => 'max:11|min:8'
+            'contact' => 'max:15|min:8'
         ];
     }
 }

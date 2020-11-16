@@ -19,7 +19,7 @@ class CreateItemsTable extends Migration
             $table->foreign('product_id')->references('id')->on('products');
             $table->unsignedBigInteger('sale_id');
             $table->foreign('sale_id')->references('id')->on('sales');
-            $table->decimal('price', 6, 3);
+            $table->decimal('price', 6, 2);
             $table->decimal('amount', 6, 3);
             $table->timestamps();
             $table->softDeletes();

@@ -21,7 +21,7 @@ class CreateClientsTable extends Migration
             $table->string('district', 100)->nullable();
             $table->string('street', 100)->nullable();
             $table->integer('number')->nullable();
-            $table->string('contact', 11)->nullable();
+            $table->string('contact', 15)->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->engine = 'InnoDB';

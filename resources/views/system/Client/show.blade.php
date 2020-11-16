@@ -33,6 +33,10 @@
                             <div><strong>Nº</strong></div>
                             R$ {{$client->number}}
                         </div>
+                        <div class="col-md-3">
+                            <div><strong>Contato</strong></div>
+                             {{$client->contact}}
+                        </div>
                     </div>
                     <a href="{{route('cliente.edit', $client->id)}}">
                         <button type="button" class="btn btn-warning">

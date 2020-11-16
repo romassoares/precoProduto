@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-3">
                             <div><strong>Preço</strong></div>
-                            R$ {{$result->getPrice()}}
+                            R$ {{$result->price}}
                         </div>
                     </div>
                     <a href="{{route('produto.edit', $result->id)}}">
@@ -55,10 +55,10 @@
                     @foreach($valGasto as $val)
                     <tr>
                         @php
-                        $totgast += str_replace(array('.', ','), array('', '.'), $val->getValGasto());
+                        $totgast +=  str_replace(array('.', ','), array('', '.'),$val->getValGasto());
                         @endphp
                         <td>{{$val->Ingredient->description}}</td>
-                        <td>{{$val->getQnt()}}</td>
+                        <td>{{floatval($val->qnt)}}{{$val->Ingredient->und}}</td>
                         <td>R$ {{$val->getValGasto()}}</td>
                         <td>
                             <div class="form-group">
@@ -79,15 +79,15 @@
                         @php
                         $ValUnd = $totgast/$result->amount;
                         @endphp
-                        <td> R$ {{number_format($ValUnd,3,',','.')}} </td>
+                        <td> R$ {{number_format($ValUnd,2,',','.')}} </td>
                         @php
-                        $lucro = str_replace(array('.',','),array('','.'),$result->getPrice())-$ValUnd;
+                        $lucro = str_replace(array('.', ','), array('', '.'),$result->price)-$ValUnd;
                         @endphp
-                        <td>R$ {{number_format($lucro,3,',','.')}}</td>
+                        <td>R$ {{number_format($lucro,2,',','.')}}</td>
                         @php
-                        $lucrototal = ($result->price*$result->amount)-$totgast;
+                        $lucrototal = (str_replace(array('.', ','), array('', '.'),$result->price)*$result->amount)-$totgast;
                         @endphp
-                        <td>R$ {{number_format($lucrototal,3,',','.')}} </td>
+                        <td>R$ {{number_format($lucrototal,2,',','.')}} </td>
                     </tr>
                     <tr>
                         <div class="col-md-12">
