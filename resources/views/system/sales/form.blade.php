@@ -14,25 +14,14 @@
                     <div class="form-group col-6">
                         <h1>Nova venda</h1>
                     </div>
-                    
                 </div>
-
                 <div class="card-body">
-                    <form role="form" action="{{route('venda.addProduct',$client->id)}}" method="post" enctype="multipart/form-data">
-                        {!! method_field('PUT') !!}
-                        {!! csrf_field() !!}
+                    
                         <div class="row col-md-12">
                             <div class="form-group col-md-4">
                                 <label for="">Cliente</label><br />
                                 {{$client->name}}
                             </div>
-                            <div class="form-group col-4">
-                                <label for="discount">Desconto</label>
-                                <input class="form-control" type="text" name="discount" id="discount" placeholder="Desconto" />
-                            </div>
-                            <div class="form-group col-4 text-right">
-                        <h1 class="text-success">R$ {{$sale->getPrice()}}</h1>
-                    </div>
                         </div>
                         <div class="row">
                             <table class="table table">
@@ -45,6 +34,7 @@
                                 </tr>
                                 @php
                                 $i = 0;
+                                $priceTot = 0;
                                 @endphp
                                 @foreach($items as $item)
                                 <tr>
@@ -52,6 +42,9 @@
                                     <td>{{$item->product->description}}</td>                                    
                                     <td>{{$item->amount}}</td>
                                     <td>R$ {{$item->getPrice()}}</td>
+                                    @php 
+                                        $priceTot += floatval($item->getPriceTot()) 
+                                    @endphp
                                     <td>R$ {{$item->getPriceTot()}}</td>
                                 </tr>
                                 @endforeach
@@ -64,8 +57,22 @@
                                 </tr>
                             </table>
                         </div>
-                        <button type="submit" class="btn btn-primary">salvar</button>
-                    </form>
+                        <form role="form" action="{{route('venda.addProduct',$client->id)}}" method="post" enctype="multipart/form-data">
+                        {!! method_field('PUT') !!}
+                        {!! csrf_field() !!}
+                            <div class="row col-12">
+                                <div class="form-group col-4 ">
+                                    <button type="submit" class="btn btn-primary  ">salvar</button>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="discount">Desconto</label>
+                                    <input class="form-control" type="text" name="discount" id="discount" placeholder="Desconto" />
+                                </div>
+                                <div class="form-group col-4 text-right">
+                                    <h1 class="text-success">R$ {{$priceTot}}</h1>
+                                </div>
+                            </div>
+                        </form>
                 </div>
             </div>
         </div>

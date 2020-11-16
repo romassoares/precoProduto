@@ -34,6 +34,7 @@
                                 @endforeach
                             </table>
                         </div>
+                    {{$priceTot}}
                     </div>
                     <a href="{{route('venda.edit', $sale->id)}}"><button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Editar</button></a>
                 </div>

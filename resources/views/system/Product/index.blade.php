@@ -6,27 +6,26 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Produtos</h3>
             </div>
-            <div class="card-body p-0">
+            <!-- <div class="card-body p-0"> -->
               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>nome</th>
-                    <th>qnt</th>
-                    <th>Valor</th>
+                    <th>Nome</th>
+                    <th>Qnt</th>
+                    <th>R$</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
+                @php $i = 0; @endphp
                   @foreach($result as $product)
                   <tr>
-                    <td>{{$product->id}}</td>
+                    <td>{{$i++}}</td>
                     <td>{{$product->description}}</td>
                     <td>{{$product->getAmount()}}</td>
                     <td>R$ {{$product->getPrice()}}</td>
@@ -42,13 +41,11 @@
                 </tbody>
               </table>
                   {{ $result->links() }}
-            </div>
+            <!-- </div> -->
             <div class="card-footer">
               <a href="/produto/novo"><button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button></a>
               <a href="{{route('produto.archive')}}" > <button class="btn btn-primary" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
             </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>

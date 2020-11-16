@@ -20,14 +20,15 @@
                     <th>nome</th>
                     <th>und</th>
                     <th>qnt</th>
-                    <th>Valor</th>
+                    <th>R$</th>
                     <th>Ações</th>
                   </tr>
                 </thead>
                 <tbody>
+                @php $i = 0; @endphp
                   @foreach($result as $ingredient)
                   <tr>
-                    <td>{{$ingredient->id}}</td>
+                    <td>{{$i}}</td>
                     <td>{{$ingredient->description}}</td>
                     <td>{{$ingredient->und}}</td>
                     <td>{{$ingredient->amount}}</td>
