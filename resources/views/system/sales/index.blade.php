@@ -10,7 +10,7 @@
                 <div class="card-body">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">Venda</h3>
+                            <h3 class="card-title">Vendas</h3>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-striped">
@@ -20,8 +20,8 @@
                                     </tr>
                                     <tr>
                                         <th>#</th>
-                                        <th>cliente</th>
-                                        <th>valor</th>
+                                        <th>Cliente</th>
+                                        <th>R$</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>

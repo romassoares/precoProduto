@@ -10,15 +10,15 @@
                 <div class="card-body">
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">clientes</h3>
+                            <h3 class="card-title">Clientes</h3>
                         </div>
                         <div class="card-body p-0">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>nome</th>
-                                        <th>cidade</th>
+                                        <th>Nome</th>
+                                        <th>Cidade</th>
                                         <th>Bairro</th>
                                         <th>Ações</th>
                                     </tr>

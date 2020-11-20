@@ -10,16 +10,15 @@
         <div class="card-body">
           <div class="card">
             <div class="card-header">
-              <h3 class="card-title">Ingrediente</h3>
+              <h3 class="card-title">Ingredientes</h3>
             </div>
             <div class="card-body p-0">
               <table class="table table-striped">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>nome</th>
-                    <th>und</th>
-                    <th>qnt</th>
+                    <th>Descri.</th>
+                    <th>Qnt</th>
                     <th>R$</th>
                     <th>Ações</th>
                   </tr>
@@ -30,8 +29,7 @@
                   <tr>
                     <td>{{$i}}</td>
                     <td>{{$ingredient->description}}</td>
-                    <td>{{$ingredient->und}}</td>
-                    <td>{{$ingredient->amount}}</td>
+                    <td>{{$ingredient->amount}}{{$ingredient->und}}</td>
                     <td>R$ {{$ingredient->getPrice()}}</td>
                     <td>
                       <div class="form-group">

@@ -15,7 +15,7 @@ return [
     */
 
     'title' => ' PrecoProduto',
-    'title_prefix' => 'precoProduto -',
+    'title_prefix' => 'precoProduto - ',
     'title_postfix' => '',
 
     /*
@@ -46,11 +46,11 @@ return [
     */
 
     'logo' => '<b>preco</b>Produto',
-    'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+    'logo_img' => 'img/LogoPreçoProduto.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => 'AdminLTE',
+    'logo_img_alt' => 'PreçoProduto',
 
     /*
     |--------------------------------------------------------------------------
@@ -105,7 +105,7 @@ return [
     'classes_brand_text' => '',
     'classes_content_header' => 'container-fluid',
     'classes_content' => 'container-fluid',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light-warning elevation-2',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand-md',
@@ -209,14 +209,9 @@ return [
 
     'menu' => [
         [
-            'text' => 'search',
-            'search' => true,
-            'topnav' => true,
-        ],
-        [
             'text'        => 'Produto',
             'url'         => 'produto',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-archive',
         ],
         [
             'text'        => 'Ingrediente',
@@ -226,17 +221,17 @@ return [
         [
             'text'        => 'Vendas',
             'url'         => 'venda',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-cart-plus',
         ],
         [
             'text'        => 'Clientes',
             'url'         => 'cliente',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-users',
         ],
         [
             'text'        => 'Relatório',
             'url'         => 'relatorio',
-            'icon'        => 'far fa-fw fa-file',
+            'icon'        => 'fas fa-area-chart',
         ]
     ],
 

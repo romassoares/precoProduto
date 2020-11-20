@@ -71,7 +71,7 @@ class ProductIngredientsController extends Controller
                         ->update(['qnt' => $qnt->qnt]);
                     if ($save) {
                         $amount = $result->update(['amount'=>$result->amount-$qnt->qnt]);
-                        return redirect()->route('produto.show', $product_id)->with('success', 'item adcionado com successo');
+                        return redirect()->route('produto.show', $product_id)->with('error', 'item adcionado com successo');
                     } else {
                         return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
                     }

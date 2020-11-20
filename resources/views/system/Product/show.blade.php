@@ -14,9 +14,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @if(session('error'))
-            @include('components.toast', ['msg' => session('error') ])
-            @endif
             <div class="card">
                 <div class="card-header">Produto</div>
                 <div class="card-body">

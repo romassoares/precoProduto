@@ -3,9 +3,7 @@
 @section('content_header')
 @stop
 @section('content')
-@if(session('error'))
-    @include('components.toast', ['msg' => session('error') ])
-@endif
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
