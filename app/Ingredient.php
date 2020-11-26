@@ -19,7 +19,7 @@ class Ingredient extends Model
     {
         $this->description = $value;
     }
-    public function getDesciption(): string
+    public function getDescription(): string
     {
         return $this->description;
     }
@@ -39,7 +39,6 @@ class Ingredient extends Model
     }
     public function getAmount()
     {
-        // dd(str_replace(array('','.'),array('.',','),$this->amount));
         return str_replace(array('','.'),array('.',','),$this->amount);
     }
 

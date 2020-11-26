@@ -6,8 +6,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Clientes</h3>
@@ -24,9 +22,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @php
+                                $i = 0; 
+                                @endphp
                                     @foreach($clients as $client)
                                     <tr>
-                                        <td>{{$client->id}}</td>
+                                        <td>{{$i++}}</td>
                                         <td>{{$client->name}}</td>
                                         <td>{{$client->city}}</td>
                                         <td>{{$client->district}}</td>
@@ -45,16 +46,14 @@
                         </div>
                         <div class="card-footer">
                             <a href="/cliente/novo">
-                                <button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button>
+                                <button class="btn btn-success"><i class="fas fa-plus"></i> Novo</button>
                             </a>
                             <a href="{{route('cliente.archive')}}" >
-                                <button class="btn btn-primary" > <i class="fas fa-archive" ></i> Arquivos Removidos
+                                <button class="btn btn-danger" > <i class="fas fa-archive" ></i> Arquivos Removidos
                                 </button> 
                             </a>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>

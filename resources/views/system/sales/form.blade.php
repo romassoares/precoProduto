@@ -93,14 +93,14 @@
                         {!! csrf_field() !!}
                         <div class="row col-md-12">
                             <div class="form-group">
-                                <select name="product_id" id="product_id">
+                                <select class="form-control" name="product_id" id="product_id">
                                     @foreach($products as $product)
                                     <option value="{{$product->id}}">
                                         {{$product->description}}
                                     </option>
                                     @endforeach
                                 </select>
-                                <input name="amount" id="amount" placeholder="Qnt"/>
+                                <input class="form-control" name="amount" id="amount" placeholder="Qnt"/>
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">adcionar</button>

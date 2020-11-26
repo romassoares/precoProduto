@@ -28,6 +28,7 @@
             </div>
           </div>
           <a href="{{route('ingrediente.edit', $result->id)}}"><button type="button" class="btn btn-warning"><i class="fas fa-edit"></i>Editar</button></a>
+          <a href="{{route('ingrediente')}}"><button class="btn btn-secundary"><i class="fas fa-reply"></i> Voltar</button></a>
         </div>
       </div>
     </div>

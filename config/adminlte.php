@@ -227,11 +227,6 @@ return [
             'text'        => 'Clientes',
             'url'         => 'cliente',
             'icon'        => 'fas fa-users',
-        ],
-        [
-            'text'        => 'Relatório',
-            'url'         => 'relatorio',
-            'icon'        => 'fas fa-area-chart',
         ]
     ],
 

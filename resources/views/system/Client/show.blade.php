@@ -31,7 +31,7 @@
                         </div>
                         <div class="col-md-3">
                             <div><strong>Nº</strong></div>
-                            R$ {{$client->number}}
+                             {{$client->number}}
                         </div>
                         <div class="col-md-3">
                             <div><strong>Contato</strong></div>
@@ -43,6 +43,7 @@
                             <i class="fas fa-edit"></i>Editar
                         </button>
                     </a>
+                    <a href="{{route('cliente')}}"><button class="btn btn-secundary"><i class="fas fa-reply"></i> Voltar</button></a>
                 </div>
             </div>
         </div>

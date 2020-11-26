@@ -40,12 +40,17 @@ class ProductIngredients extends Model
 
     public function getValGasto()
     {
-        if( $this->Ingredient->und === 'f'||$this->Ingredient->und === 'und'){
-            $price = ($this->qnt *$this->Ingredient->price)/$this->Ingredient->amount+$this->qnt;  
-            return number_format($price,2,',','.');
-        }else{
-            $price = ($this->qnt * $this->Ingredient->price);
-            return number_format($price,2,',','.');
+        if(isset($this->Ingredient)){
+            switch ($this->Ingredient->und) {
+                case 'f' || 'und':
+                    $price = ($this->qnt * $this->Ingredient->price)/$this->Ingredient->amount+$this->qnt;
+                    return number_format($price,2,',','.');
+                    break;
+                default:    
+                    $price = ($this->qnt * $this->Ingredient->price);
+                    return number_format($price,2,',','.');
+                    break;
+            }
         }
     }
 
@@ -53,6 +58,7 @@ class ProductIngredients extends Model
     {
         return $this->belongsTo('App\Ingredient');
     }
+    
     public function Product()
     {
         return $this->belongsTo('App\Product');

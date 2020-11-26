@@ -52,9 +52,14 @@ class ProductIngredientsController extends Controller
     // redireciona para a pagina de adicionar a quantidade 
     public function Qnt($id, $ing)
     {
-        $result = $this->obj->where('product_id', $id)->where('ingredient_id', $ing)->get()->first();
-        $ingredient = Ingredient::find($result->ingredient_id);
-        return view('system.Product.recipe', ['result' => $result, 'ingredient' => $ingredient]);
+        $result = $this->obj->where('product_id', intval($id))->where('ingredient_id', intval($ing))->get()->first();
+        $ingredient = Ingredient::withTrashed()->where($result->ingredient_id)->get();
+        if($ingredient){
+            return view('system.Product.recipe', ['result' => $result, 'ingredient' => $ingredient]);
+        }else{
+            DB::rollBack();
+            return redirect()->route('produto.show', intval($id))->with('error', 'Falha ingrediente não encontrado, verifique em arquivos removidos e reative-o');
+        }
     }
 
     // adicionar a quantidade de ingrediente a receita

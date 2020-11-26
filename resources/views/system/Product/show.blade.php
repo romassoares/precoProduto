@@ -54,8 +54,8 @@
                         @php
                         $totgast +=  str_replace(array('.', ','), array('', '.'),$val->getValGasto());
                         @endphp
-                        <td>{{$val->Ingredient->description}}</td>
-                        <td>{{floatval($val->qnt)}}{{$val->Ingredient->und}}</td>
+                        <td>{{$val->Ingredient->getDescription()}}</td>
+                        <td>{{$val->qnt}}{{$val->Ingredient->und?$val->Ingredient->und:''}}</td>
                         <td>R$ {{$val->getValGasto()}}</td>
                         <td>
                             <div class="form-group">
@@ -64,7 +64,7 @@
                             </div>
                         </td>
                     </tr>
-                    @endforeach
+                        @endforeach
                     <tr>
                         <th>Total gasto na receita</th>
                         <th>R$ gasto na UND</th>

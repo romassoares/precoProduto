@@ -6,8 +6,6 @@
 <div class="container">
   <div class="row justify-content-center">
     <div class="col-md-12">
-      <div class="card">
-        <div class="card-body">
           <div class="card">
             <div class="card-header">
               <h3 class="card-title">Ingredientes</h3>
@@ -27,7 +25,7 @@
                 @php $i = 0; @endphp
                   @foreach($result as $ingredient)
                   <tr>
-                    <td>{{$i}}</td>
+                    <td>{{$i++}}</td>
                     <td>{{$ingredient->description}}</td>
                     <td>{{$ingredient->amount}}{{$ingredient->und}}</td>
                     <td>R$ {{$ingredient->getPrice()}}</td>
@@ -45,12 +43,10 @@
             {{ $result->links() }}
             </div>
             <div class="card-footer">
-              <a href="/ingrediente/novo"><button class="btn btn-primary"><i class="fas fa-plus"></i> Novo</button></a>
-              <a href="/ingrediente/removidos" > <button class="btn btn-primary" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
+              <a href="/ingrediente/novo"><button class="btn btn-success"><i class="fas fa-plus"></i> Novo</button></a>
+              <a href="/ingrediente/removidos" > <button class="btn btn-danger" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
             </div>
           </div>
-        </div>
-      </div>
     </div>
   </div>
 </div>

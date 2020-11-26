@@ -36,34 +36,43 @@
                 <div class="form-group col-md-6">
                   <label for="und">Unidade de Medida</label>
                   <select name="und" id="und" class="form-control">
-                    <option {{ ($result->und ?? '' === 'kg') ? 'selected':''}} value="kg">Kg</option>
-                    <option {{($result->und ?? '' === 'g') ? 'selected':''}} value="g">grama</option>
-                    <option {{($result->und ?? '' === 'cm') ? 'selected':''}} value="cm">centimetro</option>
-                    <option {{($result->und ?? '' === 'm') ? 'selected':''}} value="m">metro</option>
-                    <option {{($result->und ?? '' === 'cm³') ? 'selected':''}} value="cm³">centimentro cubico</option>
-                    <option {{($result->und ?? '' === 'cm²') ? 'selected':''}} value="cm²">centimetro quadrado</option>
-                    <option {{($result->und ?? '' === 'l') ? 'selected':''}} value="l">litro</option>
-                    <option {{($result->und ?? '' === 'f') ? 'selected':''}} value="f">fatia</option>
-                    <option {{($result->und ?? '' === 'und') ? 'selected':''}} value="und">unidade</option>
-                    <option {{($result->und ?? '' === 'pct') ? 'selected':''}} value="pct">pacote</option>
+                    <option {{(isset($result->und) === 'kg') ? 'selected':''}} value="kg">Kg</option>
+                    <option {{(isset($result->und) === 'g') ? 'selected':''}} value="g">grama</option>
+                    <option {{(isset($result->und) === 'cm') ? 'selected':''}} value="cm">centímetro</option>
+                    <option {{(isset($result->und) === 'm') ? 'selected':''}} value="m">metro</option>
+                    <option {{(isset($result->und) === 'cm³') ? 'selected':''}} value="cm³">centímentro cúbico</option>
+                    <option {{(isset($result->und) === 'cm²') ? 'selected':''}} value="cm²">centímetro quadrado</option>
+                    <option {{(isset($result->und) === 'l') ? 'selected':''}} value="l">litro</option>
+                    <option {{(isset($result->und) === 'f') ? 'selected':''}} value="f">fatia</option>
+                    <option {{(isset($result->und) === 'und') ? 'selected':''}} value="und">unidade</option>
+                    <option {{(isset($result->und) === 'pct') ? 'selected':''}} value="pct">pacote</option>
                   </select>
                 </div>
                 <div class="form-group col-md-6">
                   <label for="price">preço</label>
-                  <input type="text" name="price" id="price" class="form-control" placeholder="preço" value="{{isset($result->price)?$result->price:old('price')}}" />
+                  <input type="text" name="price" id="price" class="form-control" placeholder="0,00" value="{{isset($result->price)?$result->price:old('price')}}" />
                   @error('price')
                     <p class="text-danger">{{$message??''}}</p>
                   @enderror
                 </div>
               </div>
-              <button class="btn btn-{{($result??'')?'warning':'info'}}" type="submit">@if($result??'') Editar @else Cadastrar @endif</button>
+              @if($result??'') 
+                <button class="btn btn-{{($result??'')?'warning':'info'}}" type="submit">
+                <i class="fas fa-edit"></i>
+                  Editar 
+                </button>
+              @else 
+                <button class="btn btn-{{($result??'')?'info':'success'}}" type="submit"><i class="fas fa-plus"></i>
+                  Cadastrar 
+                </button>
+              @endif
             </form>
+                <a href="{{route('produto')}}"><button class="btn btn-secundary"><i class="fas fa-reply"></i> Voltar</button></a>
         </div>
       </div>
     </div>
   </div>
 </div>
-
 @if(session()->has('message'))
             <div class="alert {{session('alert') ?? 'alert-info'}}">
                 {{ session('message') }}

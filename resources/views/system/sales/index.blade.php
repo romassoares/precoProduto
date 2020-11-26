@@ -6,8 +6,6 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            <div class="card">
-                <div class="card-body">
                     <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Vendas</h3>
@@ -26,9 +24,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                @php
+                                $i = 0; 
+                                @endphp
                                     @foreach($sales as $sale)
                                     <tr>
-                                        <td>{{$sale->id}}</td>
+                                        <td>{{$i++}}</td>
                                         @foreach($clients as $client)
                                             @if($sale->client_id == $client->id)
                                                 <td {{$client->deleted_at != null ? "class=text-danger ": ''}} >
@@ -55,11 +56,9 @@
                                 <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
                                     Nova venda
                                 </button>
-                                <a href="{{route('venda.archive')}}" > <button class="btn btn-primary" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
+                                <a href="{{route('venda.archive')}}" > <button class="btn btn-danger" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

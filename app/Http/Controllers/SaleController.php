@@ -50,20 +50,19 @@ class SaleController extends Controller
     }
     
     public function addProduct(Request $request, $id) {
-        $product = $this->prod->find($request->product_id);
+        $product = $this->prod->find(intval($request->product_id));
         if ($product && $product->amount >= $request->amount) {
-            $item = Items::where('product_id', $product->id)->where('sale_id', $id)->get()->first();
+            $item = Items::where('product_id', $product->id)->where('sale_id', intval($id))->get()->first();
             DB::beginTransaction();
             if ($item) {
                 $item->amount += $request->amount;
             } else {
                 $item = new Items();
-                $item->amount = $request->amount;
-                $item->sale_id = $id;
-                $item->price = $product->price;
                 $item->product_id = $product->id;
+                $item->sale_id = intval($id);
+                $item->price = floatval($product->price);
+                $item->amount = intval($request->amount);
             }
-
             $save = $item->save();
             if ($save) {
                 $product->amount -= $request->amount;
