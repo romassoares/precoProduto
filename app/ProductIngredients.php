@@ -40,17 +40,12 @@ class ProductIngredients extends Model
 
     public function getValGasto()
     {
-        if(isset($this->Ingredient)){
-            switch ($this->Ingredient->und) {
-                case 'f' || 'und':
-                    $price = ($this->qnt * $this->Ingredient->price)/$this->Ingredient->amount+$this->qnt;
-                    return number_format($price,2,',','.');
-                    break;
-                default:    
-                    $price = ($this->qnt * $this->Ingredient->price);
-                    return number_format($price,2,',','.');
-                    break;
-            }
+        if(isset($this->Ingredient->und)=== 'f'|| isset($this->Ingredient->und)=== 'und'){
+            $price = ($this->qnt * $this->Ingredient->price)/$this->Ingredient->amount+$this->qnt;
+            return number_format($price,2,',','.');
+        }else{
+            $price = ($this->qnt * $this->Ingredient->price);
+            return number_format($price,2,',','.');   
         }
     }
 

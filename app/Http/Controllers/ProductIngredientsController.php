@@ -53,7 +53,7 @@ class ProductIngredientsController extends Controller
     public function Qnt($id, $ing)
     {
         $result = $this->obj->where('product_id', intval($id))->where('ingredient_id', intval($ing))->get()->first();
-        $ingredient = Ingredient::withTrashed()->where($result->ingredient_id)->get();
+        $ingredient = Ingredient::get()->where('id',$result->ingredient_id)->first();
         if($ingredient){
             return view('system.Product.recipe', ['result' => $result, 'ingredient' => $ingredient]);
         }else{
