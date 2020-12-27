@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\DB;
 
 class ProductIngredients extends Model
 {
+    // use SoftDeletes;
     protected $fillable = [
         'product_id', 'ingredient_id', 'qnt'
     ];
@@ -40,20 +42,20 @@ class ProductIngredients extends Model
 
     public function getValGasto()
     {
-        if(isset($this->Ingredient->und)=== 'f'|| isset($this->Ingredient->und)=== 'und'){
-            $price = ($this->qnt * $this->Ingredient->price)/$this->Ingredient->amount+$this->qnt;
-            return number_format($price,2,',','.');
-        }else{
-            $price = ($this->qnt * $this->Ingredient->price);
-            return number_format($price,2,',','.');   
+        if (isset($this->Ingredient->und) === 'f' || isset($this->Ingredient->und) === 'und') {
+            $price = ($this->qnt * floatval($this->Ingredient->price)) / $this->Ingredient->amount + $this->qnt;
+            return number_format($price, 2, ',', '.');
+        } else {
+            $price = ($this->qnt * floatval($this->Ingredient->price));
+            return number_format($price, 2, ',', '.');
         }
     }
 
     public function Ingredient()
     {
-        return $this->belongsTo('App\Ingredient');
+        return $this->belongsTo('App\Ingredient')->withTrashed();
     }
-    
+
     public function Product()
     {
         return $this->belongsTo('App\Product');

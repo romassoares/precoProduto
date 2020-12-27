@@ -41,10 +41,10 @@ class Sale extends Model
 
     public function Product()
     {
-        return $this->belongsTo('App\Product');
+        return $this->belongsTo('App\Product')->withTrashed();
     }
     public function Client()
     {
-        return $this->belongsTo('App\Client');
+        return $this->belongsTo('App\Client')->withTrashed();
     }
 }

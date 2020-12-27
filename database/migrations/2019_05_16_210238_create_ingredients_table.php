@@ -18,7 +18,7 @@ class CreateIngredientsTable extends Migration
             $table->string('description', 100);
             $table->enum('und', ['kg', 'l', 'cm', 'm', 'g', 'cm³', 'cm²', 'und', 'f', 'pct']);
             $table->decimal('amount', 8, 3);
-            $table->decimal('price', 7, 2);
+            $table->string('price', 9);
             $table->timestamps();
             $table->softDeletes();
             $table->engine = 'InnoDB';

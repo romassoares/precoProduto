@@ -39,7 +39,7 @@ class Ingredient extends Model
     }
     public function getAmount()
     {
-        return str_replace(array('','.'),array('.',','),$this->amount);
+        return str_replace(array('', '.'), array('.', ','), $this->amount);
     }
 
     public function setPrice($value)
@@ -48,7 +48,7 @@ class Ingredient extends Model
     }
     public function getPrice()
     {
-        return number_format($this->price, 2, ',', '.');
+        return $this->price;
     }
 
     public function cUpdate($request, $id)

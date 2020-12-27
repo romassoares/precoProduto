@@ -21,23 +21,24 @@ class IngredientRequest extends FormRequest
      *
      * @return array
      */
-    public function rules(){
+    public function rules()
+    {
         return [
             'description' => 'required|max:100|min:3',
             'und' => 'required',
             'amount' => 'required|numeric',
-            'price' => 'required|numeric',
+            'price' => 'required',
         ];
     }
-    public function messages(){
+    public function messages()
+    {
         return [
             'description.required' => 'esse campo é obrigatório',
             'description.min' => 'campo deve ter no minimo 5 caracteres',
             'amount.required' => 'esse campo é obrigatório',
             'amount.numeric' => 'campo deve ser numérico',
-            'price.required' => 'esse campo é obrigatório', 
-            'price.numeric' => 'campo deve ser numérico',
-            'und.required' => 'esse campo é obrigatório', 
+            'price.required' => 'esse campo é obrigatório',
+            'und.required' => 'esse campo é obrigatório',
         ];
-    } 
+    }
 }
