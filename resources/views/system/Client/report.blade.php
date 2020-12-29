@@ -1,16 +1,12 @@
 @extends('adminlte::page')
-@section('title', 'Clientes')
+@section('title', 'Relatório')
 @section('content_header')
 @stop
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-            @if(session('error'))
-            @include('components.toast', ['msg' => session('error') ])
-            @endif
             <div class="card">
-                <div class="card-header">Cliente</div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-6">
@@ -46,6 +42,26 @@
                     <a href="{{route('cliente')}}"><button class="btn btn-secundary"><i class="fas fa-reply"></i> Voltar</button></a>
                 </div>
             </div>
+            <div class="row p-0">
+                @php
+                $tot = 0;
+                @endphp
+                    @foreach($sales as $sale)
+                    <a href="{{route('venda.show',$sale->id)}}">
+                        <div class="card m-2">
+                            <div class="card-body">
+                                <div>
+                                    {{$sale->created_at->format('d-M-Y')}} - R$ {{$sale->getPrice()}}
+                                    @php
+                                        $tot += floatval($sale->price)
+                                    @endphp
+                                </div>
+                            </div>
+                        </div>
+                        </a>
+                    @endforeach
+                </div>
+                TOTAL DAS COMPRAS  <strong> R$ {{number_format($tot,2,',','.')}}</strong>
         </div>
     </div>
 </div>

@@ -47,14 +47,14 @@
                                 </div>
                                 <div class="form-group  col-md-6">
                                     <label for="number">Nº</label>
-                                    <input type="text" name="number" id="number" class="form-control" placeholder="Digite o numero da residência" value="{{isset($result->number)?$result->number:old('number')}}">
+                                    <input type="text" name="number" id="number" class="form-control" value="{{isset($result->number)?$result->number:old('number')}}">
                                     @error('street')
                                     <p class="text-danger">{{$message??''}}</p>
                                     @enderror
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="contact">Contato</label>
-                                    <input type="tel" name="contact" id="contact" class="form-control" placeholder="Digite o(s) contato(s)" value="{{isset($result->contact)?$result->number:old('contact')}}">
+                                    <input type="text" name="contact" id="contact" class="form-control" value="{{isset($result->contact)?$result->contact:old('contact')}}">
                                     @error('contact')
                                     <p class="text-danger">{{$message??''}}</p>
                                     @enderror

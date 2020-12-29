@@ -22,7 +22,7 @@ class SaleController extends Controller
 
     public function index()
     {
-        $sales = $this->obj->paginate(10);
+        $sales = $this->obj->paginate(5);
         $clients = Client::withTrashed()->get();
         return view('system.sales.index', ['sales' => $sales, 'clients' => $clients]);
     }
@@ -30,26 +30,27 @@ class SaleController extends Controller
     public function store(Request $request, Sale $sale)
     {
         $products = Product::all();
-        $client = Client::withTrashed('client_id',$request->client_id)->get()->first();
-        if($client){
+        $client = Client::where('id', intval($request->client_id))->first();
+        if ($client) {
             $sale->client_id = $client->id;
             $save = $sale->save();
-                if($save){
-                    $items = $this->item->get()->where('sale_id', $sale->id);
-                    return view('system.sales.form', ['products' => $products, 'client' => $client, 'sale'=>$sale, 'items'=>$items]);
-                }
-            }else{
-                $client = Client::create(['name' => 'default']);
-                $save = new Sale();
-                $result = $save->create(['client_id' => $client->id]);
-                if($result){
-                    $items = $this->item->get()->where('sale_id',$result->id);
-                    return view('system.sales.form', ['products' => $products, 'client' => $client, 'sale'=>$result, 'items'=>$items]);
+            if ($save) {
+                $items = $this->item->get()->where('sale_id', $sale->id);
+                return view('system.sales.form', ['products' => $products,  'sale' => $sale, 'items' => $items]);
+            }
+        } else {
+            $client = Client::create(['name' => 'default']);
+            $save = new Sale();
+            $result = $save->create(['client_id' => $client->id]);
+            if ($result) {
+                $items = $this->item->get()->where('sale_id', $result->id);
+                return view('system.sales.form', ['products' => $products,  'sale' => $result, 'items' => $items]);
             }
         }
     }
-    
-    public function addProduct(Request $request, $id) {
+
+    public function addProduct(Request $request, $id)
+    {
         $product = $this->prod->find(intval($request->product_id));
         if ($product && $product->amount >= $request->amount) {
             $item = Items::where('product_id', $product->id)->where('sale_id', intval($id))->get()->first();
@@ -60,9 +61,14 @@ class SaleController extends Controller
                 $item = new Items();
                 $item->product_id = $product->id;
                 $item->sale_id = intval($id);
-                $item->price = floatval($product->price);
-                $item->amount = intval($request->amount);
+                $item->price = $product->price;
+                $item->amount = $request->amount;
             }
+            $sale = $this->obj->where('id', $id)->get()->first();
+            if ($sale) {
+                $sale->price += floatval(str_replace(array('.', ','), array('', '.'), $item->price)) * intval($request->amount);
+            }
+            $sale->save();
             $save = $item->save();
             if ($save) {
                 $product->amount -= $request->amount;
@@ -72,41 +78,62 @@ class SaleController extends Controller
                     return redirect()->route('venda.edit', $id)->with('success', 'Adicionado');
                 } else {
                     DB::rollBack();
-                    return redirect()->route('venda.edit', $id)->with('error', 'Falha ao atualizar quantidade no estoque');    
+                    return redirect()->route('venda.edit', $id)->with('error', 'Falha ao atualizar quantidade no estoque');
                 }
             } else {
                 DB::rollBack();
-                return redirect()->route('venda.edit', $id)->with('error', 'Falha ao atualizar quantidade na venda');        
+                return redirect()->route('venda.edit', $id)->with('error', 'Falha ao atualizar quantidade na venda');
             }
         } else {
-            return redirect()->route('venda.edit', $id)->with('error', 'estoque insuficiente');            
+            return redirect()->route('venda.edit', $id)->with('error', 'estoque insuficiente');
+        }
+    }
+
+    public function removeItem($id, $product)
+    {
+        $item = Items::where('product_id', $product)->where('sale_id', $id)->get()->first();
+        $itemRemove = Items::where('product_id', $product)->where('sale_id', $id)->delete();
+        $itemRemove = true;
+        if ($itemRemove) {
+            $prod = $this->prod->where('id', $item->product_id)->get()->first();
+            if ($prod) {
+                $prodAmount = $prod->amount + floatval($item->amount);
+                $prod->update(['amount' => $prodAmount]);
+            }
+            $sale = $this->obj->where('id', $id)->get()->first();
+            if ($sale) {
+                $result = floatval(str_replace(array(','), array('.'), $sale->price)) - floatval(str_replace(array(','), array('.'),  $item->getPriceTot()));
+                $saleEdit = $sale->update(['price' => $result]);
+            }
+            if ($saleEdit) {
+                return redirect()->route('venda.edit', $id)->with('success', 'item removido com sucesso');
+            }
         }
     }
 
     public function edit($id)
     {
-        $sale = Sale::findorfail($id);  
-        $items = $this->item->get()->where('sale_id',$id);
-        $client = Client::withTrashed('client_id','==',$sale->client_id)->get()->first(); 
+        $sale = Sale::findorfail($id);
+        $items = $this->item->get()->where('sale_id', $id);
         $products = Product::all();
-        return view('system.sales.form', ['products' => $products, 'client' => $client, 'items'=>$items, 'sale'=>$sale]);
+        return view('system.sales.form', ['products' => $products,  'items' => $items, 'sale' => $sale]);
     }
 
     public function show($id)
     {
         $sale = Sale::findorfail($id);
-        $items = Items::withTrashed('sale_id',$id)->get();
-        return view('system.sales.show', ['items'=>$items, 'sale'=>$sale]);
+        $items = Items::where('sale_id', $id)->get();
+        return view('system.sales.show', ['items' => $items, 'sale' => $sale]);
     }
     public function destroy($id)
     {
         $product = $this->obj->findorfail($id);
-        if($product){
+        if ($product) {
             $result = $product->delete();
-            if($result){
-                return redirect()->route('venda')->with('success','venda removido com sucesso');
+            if ($result) {
+                return redirect()->route('venda')->with('success', 'venda removido com sucesso');
             }
-        }else{
+        } else {
             return redirect()->route('venda')->with('warning', 'erro, venda não encontrado');
         }
     }
@@ -117,15 +144,14 @@ class SaleController extends Controller
         return view('system.sales.deleted', compact('result'));
     }
 
-    public function restory($id){
-        $result = $this->obj->withTrashed()->where('id',$id)->first();
-        if($result){
+    public function restory($id)
+    {
+        $result = $this->obj->withTrashed()->where('id', $id)->first();
+        if ($result) {
             $res = $result->restore();
-            if($res){
-                return redirect()->route('venda.show',$id)->with('success','arquivo restaurado com sucesso');
+            if ($res) {
+                return redirect()->route('venda.show', $id)->with('success', 'arquivo restaurado com sucesso');
             }
         }
     }
 }
-
-

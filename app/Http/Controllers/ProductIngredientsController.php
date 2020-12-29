@@ -26,37 +26,34 @@ class ProductIngredientsController extends Controller
 
     // adciona ingrediente a receita
     public function update(Request $request, $product_id)
-    {    
+    {
         $product = Product::findorfail($product_id);
         $list = $request->except(['_method', '_token']);
-        foreach ($list as $ingredient) {
-            $result = $this->obj->get()->where('product_id', $product_id);
-            foreach ($result as $exist) {
-                if ($exist->ingredient_id == $ingredient) {
-                    return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
-                }
+        $result = $this->obj->get()->where('product_id', $product_id);
+        foreach ($result as $exist) {
+            if ($exist->ingredient_id == intval($list['ingredient'])) {
+                return redirect()->route('produto.show', $product_id)->with('error', 'o ingrediente ja está salvo');
             }
-            if (isset($result)) {
-                $new = new ProductIngredients();
-                $save = $new->create(['product_id' => $product->id,'ingredient_id' => $ingredient,
-                ]);
-                if ($save) {
-                    return redirect()->route('produto.show', $product_id)->with('success', 'item adcionado com successo');
-                } else {
-                    return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
-                }
+        }
+        if (isset($result)) {
+            $new = new ProductIngredients();
+            $save = $new->create(['product_id' => $product->id, 'ingredient_id' => intval($list['ingredient']), 'qnt' => floatval($list['amount'])]);
+            if ($save) {
+                return redirect()->route('produto.show', $product_id)->with('success', 'item adcionado com successo');
+            } else {
+                return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
             }
         }
     }
-    
+
     // redireciona para a pagina de adicionar a quantidade 
     public function Qnt($id, $ing)
     {
         $result = $this->obj->where('product_id', intval($id))->where('ingredient_id', intval($ing))->get()->first();
-        $ingredient = Ingredient::get()->where('id',$result->ingredient_id)->first();
-        if($ingredient){
+        $ingredient = Ingredient::get()->where('id', $result->ingredient_id)->first();
+        if ($ingredient) {
             return view('system.Product.recipe', ['result' => $result, 'ingredient' => $ingredient]);
-        }else{
+        } else {
             DB::rollBack();
             return redirect()->route('produto.show', intval($id))->with('error', 'Falha ingrediente não encontrado, verifique em arquivos removidos e reative-o');
         }
@@ -68,19 +65,19 @@ class ProductIngredientsController extends Controller
         $exist = $this->obj->get()->where('product_id', $product_id)->where('ingredient_id', $qnt->ingredient);
         foreach ($exist as $ing) {
             if ($ing->ingredient_id == $qnt->ingredient) {
-                $result = Ingredient::get()->where('id',$qnt->ingredient)->first();
-                if($result->amount >= $qnt->qnt){
+                $result = Ingredient::get()->where('id', $qnt->ingredient)->first();
+                if ($result->amount >= $qnt->qnt) {
                     $save = DB::table('product_ingredients')
                         ->where('product_id', $ing->product_id)
                         ->where('ingredient_id', $qnt->ingredient)
                         ->update(['qnt' => $qnt->qnt]);
                     if ($save) {
-                        $amount = $result->update(['amount'=>$result->amount-$qnt->qnt]);
+                        $amount = $result->update(['amount' => $result->amount - $qnt->qnt]);
                         return redirect()->route('produto.show', $product_id)->with('error', 'item adcionado com successo');
                     } else {
                         return redirect()->back()->with('error', 'Houve um erro ao tentar adcionar os ingredientes');
                     }
-                }else{
+                } else {
                     return redirect()->route('produto.show', $product_id)->with('error', 'estoque insuficiente');
                 }
             }
@@ -88,17 +85,17 @@ class ProductIngredientsController extends Controller
         }
     }
 
-    public function remove ($prod, $ing){
+    public function remove($prod, $ing)
+    {
         $recipe = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->get()->first();
         $result = $this->obj->where('product_id', $prod)->where('ingredient_id', $ing)->delete();
-        if($result == 1){
-            $ingredient = Ingredient::where('id',$ing)->get()->first();
+        if ($result == 1) {
+            $ingredient = Ingredient::where('id', $ing)->get()->first();
             $amount = $recipe->qnt == null ? 0 : $recipe->qnt;
-            $restoreAmount = $ingredient->update(['amount'=>$ingredient->amount+$amount]);
-            if(isset($restoreAmount)){
-                return redirect()->route('produto.show',$prod)->with('ingrediente removido com sucesso');
+            $restoreAmount = $ingredient->update(['amount' => $ingredient->amount + $amount]);
+            if (isset($restoreAmount)) {
+                return redirect()->route('produto.show', $prod)->with('ingrediente removido com sucesso');
             }
         }
     }
-
 }

@@ -3,7 +3,6 @@
 @section('content_header')
 @stop
 @section('content')
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -11,66 +10,59 @@
                 <div class="card-header col-12">
                     <div class="form-group col-6">
                         <h1>Nova venda</h1>
+                        {{$sale->Client->name}}
                     </div>
                 </div>
                 <div class="card-body">
-                    
-                        <div class="row col-md-12">
-                            <div class="form-group col-md-4">
-                                <label for="">Cliente</label><br />
-                                {{$client->name}}
-                            </div>
-                        </div>
-                        <div class="row">
-                            <table class="table table">
-                                <tr>
-                                    <th>#</th>
-                                    <th>Produto</th>
-                                    <th>Qnt</th>
-                                    <th>Preço</th>
-                                    <th>Total</th>
-                                </tr>
-                                @php
-                                $i = 0;
-                                $priceTot = 0;
-                                @endphp
-                                @foreach($items as $item)
-                                <tr>
-                                    <td>{{$i++}}</td>
-                                    <td>{{$item->product->description}}</td>                                    
-                                    <td>{{$item->amount}}</td>
-                                    <td>R$ {{$item->getPrice()}}</td>
-                                    @php 
-                                        $priceTot += floatval($item->getPriceTot()) 
-                                    @endphp
-                                    <td>R$ {{$item->getPriceTot()}}</td>
-                                </tr>
-                                @endforeach
-                                <tr>
-                                    <div class="col-md-12">
-                                        <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
-                                            adcionar produto
-                                        </button>
-                                    </div>
-                                </tr>
-                            </table>
-                        </div>
-                        <form role="form" action="{{route('venda.addProduct',$client->id)}}" method="post" enctype="multipart/form-data">
+                    <div class="row">
+                        <table class="table table">
+                            <tr>
+                                <th>#</th>
+                                <th>Produto</th>
+                                <th>Qnt</th>
+                                <th>Preço</th>
+                                <th>Total</th>
+                            </tr>
+                            @php
+                            $i = 0;
+                            @endphp
+                            @foreach($items as $item)
+                            <tr>
+                                <td>{{$i++}}</td>
+                                <td>{{$item->product->description}}</td>
+                                <td>{{$item->amount}}</td>
+                                <td>R$ {{$item->getPrice()}}</td>
+                                <td>R$ {{$item->getPriceTot()}}</td>
+                                <td>
+                                    <a href="{{route('venda.removeItem',[$sale->id,$item->product_id])}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
+                                </td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
+                                        adcionar produto
+                                    </button>
+                                </div>
+                            </tr>
+                        </table>
+                    </div>
+                    <form role="form" action="{{route('venda.addProduct',$sale->Client->id)}}" method="post" enctype="multipart/form-data">
                         {!! method_field('PUT') !!}
                         {!! csrf_field() !!}
-                            <div class="row col-12">
-                                <div class="form-group col-4 ">
-                                    <button type="submit" class="btn btn-primary  ">salvar</button>
-                                </div>
-                                <div class="form-group col-4">
-                                    <label for="discount">Desconto</label>
-                                    <input class="form-control" type="text" name="discount" id="discount" placeholder="Desconto" />
-                                </div>
-                                <div class="form-group col-4 text-right">
-                                    <h1 class="text-success">R$ {{$priceTot}}</h1>
-                                </div>
+                        <div class="row col-12">
+                            <div class="form-group col-4 ">
+                                <button type="submit" class="btn btn-primary  ">salvar</button>
                             </div>
-                        </form>
+                            <div class="form-group col-4">
+                                <label for="discount">Desconto</label>
+                                <input class="form-control" type="text" name="discount" id="discount" placeholder="Desconto" />
+                            </div>
+                            <div class="form-group col-4 text-right">
+                                <h1 class="text-success">R$ {{$sale->getPrice()}}</h1>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -100,7 +92,7 @@
                                     </option>
                                     @endforeach
                                 </select>
-                                <input class="form-control" name="amount" id="amount" placeholder="Qnt"/>
+                                <input class="form-control" name="amount" id="amount" placeholder="Qnt" />
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">adcionar</button>

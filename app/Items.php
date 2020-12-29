@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Items extends Model
 {
-    use SoftDeletes;
     protected $fillable = [
         'sale_id', 'product_id', 'price', 'amount'
     ];
@@ -26,7 +25,7 @@ class Items extends Model
     }
     public function getPrice()
     {
-        return number_format($this->price, 2, ',', '.');
+        return number_format(str_replace(array('.', ','), array('', '.'), $this->price), 2, ',', '.');
     }
 
     public function setAmount($value)
@@ -40,8 +39,8 @@ class Items extends Model
 
     public function getPriceTot()
     {
-        $priceT = floatval($this->price)*floatval($this->amount);
-        return number_format($priceT, 2, ',', '.');
+        $priceT = floatval(str_replace(array('.', ','), array('', '.'), $this->price)) * floatval($this->amount);
+        return number_format(floatval($priceT), 2, ',', '.');
     }
 
     public function Sale()

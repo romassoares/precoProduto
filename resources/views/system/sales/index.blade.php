@@ -6,59 +6,62 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Vendas</h3>
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Vendas</h3>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Cliente</th>
+                                <th>R$</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                            $i = 0;
+                            @endphp
+                            @foreach($sales as $sale)
+                            <tr>
+                                <td>{{$i++}}</td>
+                                @foreach($clients as $client)
+                                @if($sale->client_id == $client->id)
+                                <td {{$client->deleted_at != null ? "class=text-danger ": ''}}>
+                                    {{$client->name}}
+                                </td>
+                                @endif
+                                @endforeach
+                                <td>{{$sale->getPrice()}}</td>
+                                <td>
+                                    <div class="form-group">
+                                        <a href="{{route('venda.show',$sale->id)}}" class="text-primary m-1"><i class="fas fa-eye"></i></a>
+                                        <a href="{{route('venda.edit',$sale->id)}}" class="text-warning m-1"><i class="fas fa-edit"></i></a>
+                                        <a href="{{route('venda.remove',$sale->id)}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-md-4 p-1">
+                            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+                                Nova venda
+                            </button>
                         </div>
-                        <div class="card-body p-0">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr>
-                                        <th colspan="4">Itens</th>
-                                    </tr>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Cliente</th>
-                                        <th>R$</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                @php
-                                $i = 0; 
-                                @endphp
-                                    @foreach($sales as $sale)
-                                    <tr>
-                                        <td>{{$i++}}</td>
-                                        @foreach($clients as $client)
-                                            @if($sale->client_id == $client->id)
-                                                <td {{$client->deleted_at != null ? "class=text-danger ": ''}} >
-                                                    {{$client->name}}
-                                                </td>
-                                            @endif
-                                        @endforeach
-                                        <td>{{$sale->getPrice()}}</td>
-                                        <td>
-                                            <div class="form-group">
-                                                <a href="{{route('venda.show',$sale->id)}}" class="text-primary m-1"><i class="fas fa-eye"></i></a>
-                                                <a href="{{route('venda.edit',$sale->id)}}" class="text-warning m-2"><i class="fas fa-edit"></i></a>
-                                                <a href="{{route('venda.remove',$sale->id)}}" class="text-danger m-1"><i class="fas fa-trash"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
+                        <div class="col-md-4 p-1">
                             {{ $sales->links() }}
                         </div>
-                        <div class="card-footer">
-                            <div class="col-md-12">
-                                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#exampleModal">
-                                    Nova venda
-                                </button>
-                                <a href="{{route('venda.archive')}}" > <button class="btn btn-danger" > <i class="fas fa-archive" ></i> Arquivos Removidos</button> </a>
-                            </div>
+                        <div class="col-md-4 p-1">
+                            <a href="{{route('venda.archive')}}"> <button class="btn btn-danger"> <i class="fas fa-archive"></i> Arquivos Removidos</button> </a>
                         </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -73,19 +76,17 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body ">
+            <div class="modal-body">
                 <form role="form" action="{{route('venda.store')}}" method="post" enctype="multipart/form-data">
-                {!! csrf_field() !!}
-                    <div class="form-group" id="item">
-                        <div class="row col-md-12">
-                            <div class="form-group">
-                                <select name="client_id" id="client_id" class="form-control">
-                                    @foreach($clients as $client)
-                                        <option value="{{$client->id}}">{{$client->name}} </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                    {!! csrf_field() !!}
+                    <div class="form-group p-1" id="item">
+                        <select class="form-control select2 select2-hidden-accessible" style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="client_id" id="client_id">
+                            @foreach ($clients as $client)
+                            <option value="{{$client->id}}">{{$client->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group  p-1">
                         <button type="submit" class="btn btn-primary">iniciar venda</button>
                     </div>
                 </form>

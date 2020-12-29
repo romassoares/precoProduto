@@ -4,20 +4,30 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Http\Requests\ClientRequest;
+use App\Sale;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
     private $obj;
-    public function __construct(Client $obj)
+    private $sale;
+    public function __construct(Client $obj, Sale $sale)
     {
         $this->obj = $obj;
+        $this->sale = $sale;
     }
 
     public function index()
     {
-        $clients = $this->obj->paginate(10);
+        $clients = $this->obj->paginate(5);
         return view('system/Client/index', ['clients' => $clients]);
+    }
+
+    public function report($id)
+    {
+        $result = $this->sale->where('client_id', $id)->get()->all();
+        $client = $this->obj->find($id);
+        return view('system/Client/report', ['sales' => $result, 'client' => $client]);
     }
 
     public function create()
@@ -30,16 +40,16 @@ class ClientController extends Controller
         $client = $request->only(['name', 'city', 'district', 'street', 'number', 'contact']);
         $salvo = $this->obj->cstore($client);
         if ($salvo) {
-            return redirect()->route('cliente.show', $salvo->id);
+            return redirect()->route('cliente.report', $salvo->id);
         } else {
             return redirect()->route('cliente.create', ['client' => $client]);
         }
     }
 
-    public function show($id)
+    public function search(Request $label)
     {
-        $result = $this->obj->find($id);
-        return view('system/Client/show', ['client' => $result]);
+        $search = $this->obj->where('name', 'like', "$label->search%")->paginate();
+        return view('system.Client.index', ['clients' => $search]);
     }
 
     public function edit($id)
@@ -53,18 +63,18 @@ class ClientController extends Controller
         $client = $request->only(['name', 'city', 'district', 'street', 'number', 'contact']);
         $result = $this->obj->cUpdate($client, $id);
         $client = $this->obj->find($id);
-        return view('system/Client/show', ['client' => $client]);
+        return redirect()->route('cliente.report', $id);
     }
 
     public function destroy($id)
     {
         $client = $this->obj->findorfail($id);
-        if($client){
+        if ($client) {
             $result = $client->delete();
-            if($result){
-                return redirect()->route('cliente')->with('success','cliente removido com sucesso');
+            if ($result) {
+                return redirect()->route('cliente')->with('success', 'cliente removido com sucesso');
             }
-        }else{
+        } else {
             return redirect()->route('cliente')->with('warning', 'erro, cliente não encontrado');
         }
     }
@@ -75,14 +85,14 @@ class ClientController extends Controller
         return view('system/Client/deleted', compact('result'));
     }
 
-    public function restory($id){
-        $result = $this->obj->withTrashed()->where('id',$id)->first();
-        if($result){
+    public function restory($id)
+    {
+        $result = $this->obj->withTrashed()->where('id', $id)->first();
+        if ($result) {
             $res = $result->restore();
-            if($res){
-                return redirect()->route('cliente.show',$id)->with('success','arquivo restaurado com sucesso');
+            if ($res) {
+                return redirect()->route('cliente.report', $id)->with('success', 'arquivo restaurado com sucesso');
             }
         }
     }
 }
-

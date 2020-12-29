@@ -53,6 +53,15 @@ class Client extends Model
         return $this->street;
     }
 
+    public function setContact($value)
+    {
+        $this->contact = $value;
+    }
+    public function getContact()
+    {
+        return $this->contact;
+    }
+
     public function cUpdate($request, $id)
     {
         $teste = Client::find($id);
@@ -70,8 +79,4 @@ class Client extends Model
             return $result;
         }
     }
-    // public function Ingredients()
-    // {
-    //     return $this->belongsToMany('App\Ingredient', 'product_ingredients', 'product_id', 'ingredient_id');
-    // }
 }

@@ -50,14 +50,15 @@ Route::middleware('auth')->group(function () {
     // cliente
     Route::group(['prefix' => '/cliente'], function () {
         Route::get('', 'ClientController@index')->name('cliente');
+        Route::post('/pesquisar', 'ClientController@search')->name('cliente.search');
         Route::get('/novo', 'ClientController@create')->name('cliente.create');
         Route::post('/salvar', 'ClientController@store')->name('cliente.store');
-        Route::get('/{id}/exibir', 'ClientController@show')->name('cliente.show');
         Route::get('/{id}/editar', 'ClientController@edit')->name('cliente.edit');
         Route::put('/{id}/altera', 'ClientController@update')->name('cliente.update');
         Route::get('/{id}/remover', 'ClientController@destroy')->name('cliente.remove');
         Route::get('/removidos', 'ClientController@archive')->name('cliente.archive');
         Route::get('/{id}/restaurar', 'ClientController@restory')->name('cliente.restory');
+        Route::get('/{id}/relatorio', 'ClientController@report')->name('cliente.report');
     });
 
     // venda
@@ -69,6 +70,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/editar', 'SaleController@edit')->name('venda.edit');
         Route::put('/{id}/altera', 'SaleController@update')->name('venda.update');
         Route::get('/{id}/remover', 'SaleController@destroy')->name('venda.remove');
+        Route::get('/{id}/removerItem/{item}', 'SaleController@removeItem')->name('venda.removeItem');
         Route::get('/removidos', 'SaleController@archive')->name('venda.archive');
         Route::get('/{id}/restaurar', 'SaleController@restory')->name('venda.restory');
     });

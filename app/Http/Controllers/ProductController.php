@@ -23,7 +23,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        $result = $this->obj->paginate(10);
+        $result = $this->obj->paginate(5);
         return view('system/Product/index', compact('result' ?? ''));
     }
 
@@ -37,9 +37,9 @@ class ProductController extends Controller
         $product = $request->only(['description', 'amount', 'und', 'price']);
         $salvo = $this->obj->cstore($product);
         if ($salvo) {
-            return redirect()->route('produto.show', $salvo->id)->with('success','editado com sucesso');
+            return redirect()->route('produto.show', $salvo->id)->with('success', 'editado com sucesso');
         } else {
-            return redirect()->route('produto.create', compact('request'))->with('danger','erro ao tentar cadastrar o produto');
+            return redirect()->route('produto.create', compact('request'))->with('danger', 'erro ao tentar cadastrar o produto');
         }
     }
 
@@ -48,7 +48,7 @@ class ProductController extends Controller
         $product = $this->obj->findorfail($id);
         $ingredient = $this->ing->withTrashed()->get();
         $valGasto = $this->pr->where('product_id', $id)->get();
-        return view('system/Product/show', ['result' => $product,'ingredient' => $ingredient,'valGasto' => $valGasto]);
+        return view('system/Product/show', ['result' => $product, 'ingredient' => $ingredient, 'valGasto' => $valGasto]);
     }
 
     public function edit($id)
@@ -61,18 +61,18 @@ class ProductController extends Controller
     {
         $product = $request->only(['description', 'amount', 'und', 'price']);
         $result = $this->obj->cUpdate($product, $id);
-        return redirect()->route('produto.show', $id)->with('success','editado com sucesso');
+        return redirect()->route('produto.show', $id)->with('success', 'editado com sucesso');
     }
 
     public function destroy($id)
     {
         $product = $this->obj->findorfail($id);
-        if($product){
+        if ($product) {
             $result = $product->delete();
-            if($result){
-                return redirect()->route('produto')->with('success','produto removido com sucesso');
+            if ($result) {
+                return redirect()->route('produto')->with('success', 'produto removido com sucesso');
             }
-        }else{
+        } else {
             return redirect()->route('produto')->with('warning', 'erro, produto não encontrado');
         }
     }
@@ -83,12 +83,13 @@ class ProductController extends Controller
         return view('system/Product/deleted', compact('result'));
     }
 
-    public function restory($id){
-        $result = $this->obj->withTrashed()->where('id',$id)->first();
-        if($result){
+    public function restory($id)
+    {
+        $result = $this->obj->withTrashed()->where('id', $id)->first();
+        if ($result) {
             $res = $result->restore();
-            if($res){
-                return redirect()->route('produto.show',$id)->with('success','arquivo restaurado com sucesso');
+            if ($res) {
+                return redirect()->route('produto.show', $id)->with('success', 'arquivo restaurado com sucesso');
             }
         }
     }

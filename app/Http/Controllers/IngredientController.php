@@ -17,7 +17,7 @@ class IngredientController extends Controller
 
     public function index()
     {
-        $result = $this->obj->paginate(10);
+        $result = $this->obj->paginate(5);
         return view('system/Ingredient/index', compact('result'));
     }
 
@@ -53,16 +53,16 @@ class IngredientController extends Controller
         $result = $this->obj->cUpdate($ingredient, $id);
         return redirect()->route('ingrediente.show', $id);
     }
-    
+
     public function destroy($id)
     {
         $ingredient = $this->obj->findorfail($id);
-        if($ingredient){
+        if ($ingredient) {
             $result = $ingredient->delete();
-            if($result){
-                return redirect()->route('ingrediente')->with('success','ingrediente removido com sucesso');
+            if ($result) {
+                return redirect()->route('ingrediente')->with('success', 'ingrediente removido com sucesso');
             }
-        }else{
+        } else {
             return redirect()->route('ingrediente')->with('warning', 'erro, ingrediente não encontrado');
         }
     }
@@ -73,14 +73,14 @@ class IngredientController extends Controller
         return view('system/Ingredient/deleted', ['result' => $result]);
     }
 
-    public function restory($id){
-        $result = $this->obj->withTrashed()->where('id',$id)->first();
-        if($result){
+    public function restory($id)
+    {
+        $result = $this->obj->withTrashed()->where('id', $id)->first();
+        if ($result) {
             $res = $result->restore();
-            if($res){
-                return redirect()->route('ingrediente.show',$id)->with('success','arquivo restaurado com sucesso');
+            if ($res) {
+                return redirect()->route('ingrediente.show', $id)->with('success', 'arquivo restaurado com sucesso');
             }
         }
     }
 }
-
