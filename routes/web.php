@@ -73,5 +73,6 @@ Route::middleware('auth')->group(function () {
         Route::get('/{id}/removerItem/{item}', 'SaleController@removeItem')->name('venda.removeItem');
         Route::get('/removidos', 'SaleController@archive')->name('venda.archive');
         Route::get('/{id}/restaurar', 'SaleController@restory')->name('venda.restory');
+        Route::get('/relatorio', 'ReportController@index')->name('venda.report');
     });
 });

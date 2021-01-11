@@ -53,6 +53,9 @@
                             <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
                                 Nova venda
                             </button>
+                            <a href="{{route('venda.report')}}" class="btn btn-primary">
+                                <i class="fas fa-chart-line"></i> Relatorio
+                            </a>
                         </div>
                         <div class="col-md-4 p-1">
                             {{ $sales->links() }}

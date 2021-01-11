@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Report;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ReportController extends Controller
 {
@@ -14,7 +15,12 @@ class ReportController extends Controller
      */
     public function index()
     {
-        return view('system/report/index');
+        $total = 0;
+        $report = DB::select('SELECT SUBSTRING(created_at, 1, 7) as data, SUM(CASE WHEN discount > 0 THEN price - discount ELSE price END) AS total FROM sales GROUP BY data ORDER BY data');
+        foreach($report as $data){
+            $total += $data->total;
+        }
+        return view('system/report/index', compact('report', 'total'));
     }
 
     /**
